@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">mobilephone_water</string>
+    <string name="main">Главный</string>
+    <string name="history">История</string>
+    <string name="statistics">Статистика</string>
+    <string name="history_title">История</string>
+    <string name="history_description">📋 Здесь будет история потребления воды</string>
+    <string name="main_title">Главный экран</string>
+    <string name="main_glass">💧 Стакан воды</string>
+    <string name="main_progress">0 мл / 3000 мл</string>
+    <string name="statistics_title">Статистика</string>
+    <string name="statistics_description">📊 Здесь будет статистика</string>
 </resources>
