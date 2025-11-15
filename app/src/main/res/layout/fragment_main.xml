@@ -9,7 +9,6 @@
     android:background="@color/primary_dark"
     tools:context=".MainFragment">
 
-    <!-- Заголовок -->
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
@@ -23,7 +22,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp" />
 
-    <!-- ProgressBar (стакан воды) -->
     <ProgressBar
         android:id="@+id/progress_bar"
         style="@android:style/Widget.ProgressBar.Horizontal"
@@ -37,7 +35,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="40dp" />
 
-    <!-- Количество выпитой воды -->
     <TextView
         android:id="@+id/tv_total_amount"
         android:layout_width="wrap_content"
@@ -51,7 +48,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="24dp" />
 
-    <!-- Дневная цель -->
     <TextView
         android:id="@+id/tv_goal"
         android:layout_width="wrap_content"
@@ -64,7 +60,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="8dp" />
 
-    <!-- Разделитель -->
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"
@@ -73,7 +68,6 @@
         app:layout_constraintTop_toBottomOf="@id/tv_goal"
         android:layout_marginTop="24dp" />
 
-    <!-- Заголовок для ввода значения -->
     <TextView
         android:id="@+id/tv_input_label"
         android:layout_width="wrap_content"
@@ -86,7 +80,6 @@
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="24dp" />
 
-    <!-- EditText для ввода количества воды -->
     <EditText
         android:id="@+id/et_water_amount"
         android:layout_width="0dp"
@@ -103,7 +96,6 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp" />
 
-    <!-- Кнопка добавления -->
     <Button
         android:id="@+id/btn_add_custom"
         android:layout_width="wrap_content"
@@ -116,7 +108,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="8dp" />
 
-    <!-- Кнопки быстрого добавления -->
     <Button
         android:id="@+id/btn_add_250ml"
         android:layout_width="0dp"
@@ -155,7 +146,6 @@
         android:layout_marginTop="8dp" />
 
 
-    <!-- Заголовок для установки цели -->
     <TextView
         android:id="@+id/tv_goal_label"
         android:layout_width="wrap_content"
@@ -168,7 +158,6 @@
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="24dp" />
 
-    <!-- EditText для ввода цели -->
     <EditText
         android:id="@+id/et_goal_amount"
         android:layout_width="0dp"
@@ -185,7 +174,6 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp" />
 
-    <!-- Кнопка установления цели -->
     <Button
         android:id="@+id/btn_set_goal"
         android:layout_width="wrap_content"

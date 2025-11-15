@@ -11,7 +11,6 @@ class WaterRepository(
     private val dailyGoalDao: DailyGoalDao
 ) {
 
-    // Water Records
     val allRecords: LiveData<List<WaterRecord>> = waterRecordDao.getAllRecords()
 
     fun getRecordsByDate(date: String): LiveData<List<WaterRecord>> {
@@ -38,7 +37,6 @@ class WaterRepository(
         waterRecordDao.deleteAll()
     }
 
-    // Daily Goal
     val dailyGoal: LiveData<DailyGoal?> = dailyGoalDao.getDailyGoal()
 
     suspend fun setDailyGoal(goalAmount: Int) {

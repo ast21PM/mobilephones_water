@@ -107,21 +107,18 @@ class MainFragment : Fragment() {
     }
 
     private fun setupButtons() {
-        // Кнопка +250 мл
         btnAdd250ml.setOnClickListener {
             viewModel.addWaterRecord(250)
             etWaterAmount.setText("")
             Toast.makeText(requireContext(), "✓ +250 мл добавлено", Toast.LENGTH_SHORT).show()
         }
 
-        // Кнопка +500 мл
         btnAdd500ml.setOnClickListener {
             viewModel.addWaterRecord(500)
             etWaterAmount.setText("")
             Toast.makeText(requireContext(), "✓ +500 мл добавлено", Toast.LENGTH_SHORT).show()
         }
 
-        // Кнопка добавить пользовательское значение
         btnAddCustom.setOnClickListener {
             val amount = etWaterAmount.text.toString().toIntOrNull()
             if (amount != null && amount > 0) {
@@ -133,7 +130,6 @@ class MainFragment : Fragment() {
             }
         }
 
-        // Кнопка установить цель
         btnSetGoal.setOnClickListener {
             val goal = etGoalAmount.text.toString().toIntOrNull()
             if (goal != null && goal > 0) {
@@ -144,7 +140,6 @@ class MainFragment : Fragment() {
             }
         }
 
-        // Кнопка удалить 100 мл
         btnRemove100ml.setOnClickListener {
             val currentTotal = tvTotalAmount.text.toString()
                 .replace("Выпито: ", "")

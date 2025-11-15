@@ -48,20 +48,17 @@ class StatisticsFragment : Fragment() {
     private fun observeData() {
         val currentDate = getCurrentDate()
 
-        // Статистика за сегодня
         viewModel.getTotalAmountByDate(currentDate).observe(viewLifecycleOwner) { total ->
             val amount = total ?: 0
             tvTodayAmount.text = "$amount мл"
             updateProgressBar(amount)
         }
 
-        // Дневная цель
         viewModel.dailyGoal.observe(viewLifecycleOwner) { goal ->
             val goalAmount = goal?.goalAmount ?: 2000
             tvTodayGoal.text = "Цель: $goalAmount мл"
         }
 
-        // Статистика за неделю (среднее)
         tvWeekAmount.text = "~2000 мл/день"
     }
 

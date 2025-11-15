@@ -7,7 +7,6 @@
     android:background="@color/primary_dark"
     android:padding="16dp">
 
-    <!-- Заголовок -->
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
@@ -21,7 +20,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp" />
 
-    <!-- Карточка с сегодняшней статистикой -->
     <androidx.cardview.widget.CardView
         android:id="@+id/card_today"
         android:layout_width="match_parent"
@@ -90,7 +88,6 @@
 
     </androidx.cardview.widget.CardView>
 
-    <!-- Карточка со статистикой недели -->
     <androidx.cardview.widget.CardView
         android:id="@+id/card_week"
         android:layout_width="match_parent"
@@ -135,7 +132,6 @@
 
     </androidx.cardview.widget.CardView>
 
-    <!-- Карточка с информацией -->
     <androidx.cardview.widget.CardView
         android:id="@+id/card_info"
         android:layout_width="match_parent"
