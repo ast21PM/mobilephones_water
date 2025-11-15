@@ -27,4 +27,16 @@ interface WaterRecordDao {
 
     @Query("DELETE FROM water_records")
     suspend fun deleteAll()
+
+
+    @Query("""
+        SELECT COALESCE(CAST(AVG(daily_total) AS INTEGER), 0)
+        FROM (
+            SELECT SUM(amount) as daily_total
+            FROM water_records
+            WHERE date >= date('now', '-7 days')
+            GROUP BY date
+        )
+    """)
+    suspend fun getAverageWeekly(): Int
 }

@@ -42,4 +42,8 @@ class WaterRepository(
     suspend fun setDailyGoal(goalAmount: Int) {
         dailyGoalDao.setDailyGoal(DailyGoal(id = 1, goalAmount = goalAmount))
     }
+
+    suspend fun getAverageWaterIntake(): Int {
+        return waterRecordDao.getAverageWeekly()
+    }
 }

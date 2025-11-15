@@ -2,6 +2,8 @@ package com.example.mobilephone_water.data.preferences
 
 import android.content.Context
 import android.content.SharedPreferences
+import java.text.SimpleDateFormat
+import java.util.*
 
 class AppPreferences(context: Context) {
 
@@ -11,12 +13,12 @@ class AppPreferences(context: Context) {
     companion object {
         private const val PREF_NAME = "water_tracker_preferences"
 
-
         private const val KEY_NOTIFICATION_ENABLED = "notification_enabled"
         private const val KEY_NOTIFICATION_INTERVAL = "notification_interval"
         private const val KEY_NOTIFICATION_START_TIME = "notification_start_time"
         private const val KEY_NOTIFICATION_END_TIME = "notification_end_time"
         private const val KEY_FIRST_LAUNCH = "first_launch"
+        private const val KEY_LAST_RESET_DATE = "last_reset_date"
     }
 
     var isNotificationEnabled: Boolean
@@ -38,4 +40,13 @@ class AppPreferences(context: Context) {
     var isFirstLaunch: Boolean
         get() = sharedPreferences.getBoolean(KEY_FIRST_LAUNCH, true)
         set(value) = sharedPreferences.edit().putBoolean(KEY_FIRST_LAUNCH, value).apply()
+
+    var lastResetDate: String
+        get() = sharedPreferences.getString(KEY_LAST_RESET_DATE, getCurrentDate()) ?: getCurrentDate()
+        set(value) = sharedPreferences.edit().putString(KEY_LAST_RESET_DATE, value).apply()
+
+    private fun getCurrentDate(): String {
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        return dateFormat.format(Date())
+    }
 }
