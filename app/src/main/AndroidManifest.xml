@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -23,10 +27,20 @@
             </intent-filter>
         </activity>
 
- 
+
         <activity
             android:name=".MainActivity"
             android:exported="true" />
+
+
+        <receiver
+            android:name=".data.notifications.NotificationBroadcastReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="add_water_action" />
+                <action android:name="dismiss_action" />
+            </intent-filter>
+        </receiver>
 
     </application>
 

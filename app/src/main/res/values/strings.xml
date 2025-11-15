@@ -10,4 +10,5 @@
     <string name="main_progress">0 мл / 3000 мл</string>
     <string name="statistics_title">Статистика</string>
     <string name="statistics_description">📊 Здесь будет статистика</string>
+    <string name="settings">Настройки</string>
 </resources>

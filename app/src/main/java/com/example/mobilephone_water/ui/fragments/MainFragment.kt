@@ -2,6 +2,9 @@ package com.example.mobilephone_water
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -11,6 +14,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.example.mobilephone_water.data.notifications.NotificationScheduler
 import com.example.mobilephone_water.data.preferences.AppPreferences
 import com.example.mobilephone_water.ui.viewmodel.WaterViewModel
 import java.text.SimpleDateFormat
@@ -55,6 +60,15 @@ class MainFragment : Fragment() {
         initViews(view)
         observeData()
         setupButtons()
+
+
+        val notificationScheduler = NotificationScheduler(requireContext())
+        if (!notificationScheduler.isNotificationEnabled()) {
+            notificationScheduler.scheduleNotifications(intervalHours = 2)
+        }
+
+        @Suppress("DEPRECATION")
+        setHasOptionsMenu(true)
     }
 
     private fun initViews(view: View) {
@@ -152,6 +166,25 @@ class MainFragment : Fragment() {
             } else {
                 Toast.makeText(requireContext(), "✗ Недостаточно воды для удаления", Toast.LENGTH_SHORT).show()
             }
+        }
+    }
+
+    @Deprecated("Use MenuProvider instead")
+    @Suppress("DEPRECATION")
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_main, menu)
+    }
+
+    @Deprecated("Use MenuProvider instead")
+    @Suppress("DEPRECATION")
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_settings -> {
+                findNavController().navigate(R.id.settingsFragment)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 
