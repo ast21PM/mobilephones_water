@@ -142,6 +142,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="24dp"
         android:layout_marginStart="4dp" />
+    <Button
+        android:id="@+id/btn_remove_100ml"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:text="- 100 мл"
+        android:textColor="@color/text_light"
+        android:backgroundTint="#e74c3c"
+        app:layout_constraintTop_toBottomOf="@id/btn_add_250ml"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp" />
+
 
     <!-- Заголовок для установки цели -->
     <TextView
