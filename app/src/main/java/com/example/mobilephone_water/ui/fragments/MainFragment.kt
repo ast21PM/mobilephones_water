@@ -7,16 +7,18 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.OvershootInterpolator
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.mobilephone_water.data.notifications.NotificationScheduler
 import com.example.mobilephone_water.data.preferences.AppPreferences
+import com.example.mobilephone_water.ui.views.WaterProgressView
 import com.example.mobilephone_water.ui.viewmodel.WaterViewModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -26,16 +28,15 @@ class MainFragment : Fragment() {
     private lateinit var viewModel: WaterViewModel
     private lateinit var appPreferences: AppPreferences
 
-    private lateinit var tvTotalAmount: TextView
-    private lateinit var tvGoal: TextView
-    private lateinit var progressBar: ProgressBar
-    private lateinit var etWaterAmount: EditText
-    private lateinit var etGoalAmount: EditText
+    private lateinit var waterProgressView: WaterProgressView
     private lateinit var btnAdd250ml: Button
+    private lateinit var btnAdd330ml: Button
     private lateinit var btnAdd500ml: Button
-    private lateinit var btnAddCustom: Button
-    private lateinit var btnSetGoal: Button
-    private lateinit var btnRemove100ml: Button
+    private lateinit var btnAdd1l: Button
+    private lateinit var btnMinus100ml: Button
+    private lateinit var btnReset: Button
+    private lateinit var tvGoal: TextView
+    private var dailyGoal = 2200
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,15 +53,14 @@ class MainFragment : Fragment() {
         appPreferences = AppPreferences(requireContext())
 
         if (appPreferences.isFirstLaunch) {
-            viewModel.setDailyGoal(2000)
+            viewModel.setDailyGoal(2200)
             appPreferences.isFirstLaunch = false
-            Toast.makeText(requireContext(), "Добро пожаловать! Цель: 2000 мл", Toast.LENGTH_SHORT).show()
         }
 
         initViews(view)
         observeData()
         setupButtons()
-
+        animateViewsOnStart()
 
         val notificationScheduler = NotificationScheduler(requireContext())
         if (!notificationScheduler.isNotificationEnabled()) {
@@ -72,101 +72,162 @@ class MainFragment : Fragment() {
     }
 
     private fun initViews(view: View) {
-        tvTotalAmount = view.findViewById(R.id.tv_total_amount)
-        tvGoal = view.findViewById(R.id.tv_goal)
-        progressBar = view.findViewById(R.id.progress_bar)
-        etWaterAmount = view.findViewById(R.id.et_water_amount)
-        etGoalAmount = view.findViewById(R.id.et_goal_amount)
+        waterProgressView = view.findViewById(R.id.water_progress_view)
         btnAdd250ml = view.findViewById(R.id.btn_add_250ml)
+        btnAdd330ml = view.findViewById(R.id.btn_add_330ml)  // ✅ ДОБАВЛЕНО
         btnAdd500ml = view.findViewById(R.id.btn_add_500ml)
-        btnAddCustom = view.findViewById(R.id.btn_add_custom)
-        btnSetGoal = view.findViewById(R.id.btn_set_goal)
-        btnRemove100ml = view.findViewById(R.id.btn_remove_100ml)
+        btnAdd1l = view.findViewById(R.id.btn_add_1l)        // ✅ ДОБАВЛЕНО
+        btnMinus100ml = view.findViewById(R.id.btn_minus_100ml)
+        btnReset = view.findViewById(R.id.btn_reset)
+        tvGoal = view.findViewById(R.id.tv_goal)
+
+        tvGoal.setOnClickListener {
+            showChangeGoalDialog()
+        }
     }
 
     private fun observeData() {
         val currentDate = getCurrentDate()
 
-        viewModel.getTotalAmountByDate(currentDate).observe(viewLifecycleOwner) { total ->
+        viewModel.dailyGoal?.observe(viewLifecycleOwner) { goal ->
+            dailyGoal = goal?.goalAmount ?: 2200
+            waterProgressView.setDailyGoal(dailyGoal)
+            updateGoalText()
+        }
+
+        viewModel.getTotalAmountByDate(currentDate)?.observe(viewLifecycleOwner) { total ->
             val amount = total ?: 0
-            tvTotalAmount.text = "Выпито: $amount мл"
-            updateProgressBar()
+            val progress = (amount.toFloat() / dailyGoal) * 100f
+            waterProgressView.setProgress(progress, animated = true)
         }
-
-        viewModel.dailyGoal.observe(viewLifecycleOwner) { goal ->
-            val goalAmount = goal?.goalAmount ?: 2000
-            tvGoal.text = "Цель: $goalAmount мл"
-            etGoalAmount.setText(goalAmount.toString())
-            updateProgressBar()
-        }
-    }
-
-    private fun updateProgressBar() {
-        val currentTotal = tvTotalAmount.text.toString()
-            .replace("Выпито: ", "")
-            .replace(" мл", "")
-            .toIntOrNull() ?: 0
-        val goal = tvGoal.text.toString()
-            .replace("Цель: ", "")
-            .replace(" мл", "")
-            .toIntOrNull() ?: 2000
-
-        val progress = if (goal > 0) {
-            ((currentTotal.toDouble() / goal) * 100).toInt().coerceIn(0, 100)
-        } else {
-            0
-        }
-
-        progressBar.progress = progress
     }
 
     private fun setupButtons() {
         btnAdd250ml.setOnClickListener {
-            viewModel.addWaterRecord(250)
-            etWaterAmount.setText("")
-            Toast.makeText(requireContext(), "✓ +250 мл добавлено", Toast.LENGTH_SHORT).show()
+            animateButtonClick(it)
+            viewModel.addWaterRecord(200)
+            showSuccessToast("💧 +200 мл добавлено")
+        }
+
+        btnAdd330ml.setOnClickListener {  // ✅ ДОБАВЛЕНО
+            animateButtonClick(it)
+            viewModel.addWaterRecord(330)
+            showSuccessToast("💧 +330 мл добавлено")
         }
 
         btnAdd500ml.setOnClickListener {
+            animateButtonClick(it)
             viewModel.addWaterRecord(500)
-            etWaterAmount.setText("")
-            Toast.makeText(requireContext(), "✓ +500 мл добавлено", Toast.LENGTH_SHORT).show()
+            showSuccessToast("💧 +500 мл добавлено")
         }
 
-        btnAddCustom.setOnClickListener {
-            val amount = etWaterAmount.text.toString().toIntOrNull()
-            if (amount != null && amount > 0) {
-                viewModel.addWaterRecord(amount)
-                etWaterAmount.setText("")
-                Toast.makeText(requireContext(), "✓ +$amount мл добавлено", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(requireContext(), "✗ Введите правильное значение", Toast.LENGTH_SHORT).show()
+        btnAdd1l.setOnClickListener {  // ✅ ДОБАВЛЕНО
+            animateButtonClick(it)
+            viewModel.addWaterRecord(1000)
+            showSuccessToast("💧 +1л добавлено")
+        }
+
+        btnMinus100ml.setOnClickListener {
+            animateButtonClick(it)
+            viewModel.addWaterRecord(-100)
+            showSuccessToast("💧 -100 мл вычтено")
+        }
+
+        btnReset.setOnClickListener {
+            animateButtonClick(it)
+            showResetConfirmDialog()
+        }
+    }
+
+    private fun showResetConfirmDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("🔄 Сброс данных")
+            .setMessage("Вы уверены? Все записи за сегодня будут удалены.")
+            .setPositiveButton("✓ Да") { dialog, _ ->
+                resetTodayData()
+                dialog.dismiss()
             }
-        }
-
-        btnSetGoal.setOnClickListener {
-            val goal = etGoalAmount.text.toString().toIntOrNull()
-            if (goal != null && goal > 0) {
-                viewModel.setDailyGoal(goal)
-                Toast.makeText(requireContext(), "✓ Цель изменена на $goal мл", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(requireContext(), "✗ Введите правильное значение", Toast.LENGTH_SHORT).show()
+            .setNegativeButton("✗ Отмена") { dialog, _ ->
+                dialog.dismiss()
             }
+            .show()
+    }
+
+    private fun resetTodayData() {
+        val currentDate = getCurrentDate()
+        viewModel.deleteAllRecordsForDate(currentDate)
+        showSuccessToast("🔄 Данные сброшены")
+    }
+
+    private fun showChangeGoalDialog() {
+        val editText = EditText(requireContext()).apply {
+            inputType = android.text.InputType.TYPE_CLASS_NUMBER
+            hint = "Введите цель (мл)"
+            setText(dailyGoal.toString())
         }
 
-        btnRemove100ml.setOnClickListener {
-            val currentTotal = tvTotalAmount.text.toString()
-                .replace("Выпито: ", "")
-                .replace(" мл", "")
-                .toIntOrNull() ?: 0
-
-            if (currentTotal >= 100) {
-                viewModel.addWaterRecord(-100)
-                Toast.makeText(requireContext(), "✓ -100 мл удалено", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(requireContext(), "✗ Недостаточно воды для удаления", Toast.LENGTH_SHORT).show()
+        AlertDialog.Builder(requireContext())
+            .setTitle("🎯 Изменить дневную цель")
+            .setMessage("Текущая цель: $dailyGoal мл")
+            .setView(editText)
+            .setPositiveButton("✓ Сохранить") { dialog, _ ->
+                val newGoal = editText.text.toString().toIntOrNull()
+                if (newGoal != null && newGoal > 0 && newGoal <= 10000) {
+                    viewModel.setDailyGoal(newGoal)
+                    Toast.makeText(
+                        requireContext(),
+                        "✅ Цель изменена на $newGoal мл",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        "❌ Введите корректное значение (1-10000)",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                dialog.dismiss()
             }
-        }
+            .setNegativeButton("✗ Отмена") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+
+    private fun updateGoalText() {
+        tvGoal.text = "🎯 Цель: $dailyGoal мл в день (нажми для изменения)"
+    }
+
+    private fun animateButtonClick(view: View) {
+        view.animate()
+            .scaleX(0.9f)
+            .scaleY(0.9f)
+            .setDuration(100)
+            .withEndAction {
+                view.animate()
+                    .scaleX(1f)
+                    .scaleY(1f)
+                    .setDuration(100)
+                    .start()
+            }
+            .start()
+    }
+
+    private fun animateViewsOnStart() {
+        waterProgressView.alpha = 0f
+        waterProgressView.scaleX = 0.8f
+        waterProgressView.scaleY = 0.8f
+        waterProgressView.animate()
+            .alpha(1f)
+            .scaleX(1f)
+            .scaleY(1f)
+            .setDuration(600)
+            .setInterpolator(OvershootInterpolator())
+            .start()
+    }
+
+    private fun showSuccessToast(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
     @Deprecated("Use MenuProvider instead")

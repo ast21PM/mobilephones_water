@@ -1,13 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary_dark">#1a1a2e</color>
-    <color name="secondary_dark">#16213e</color>
+
+    <color name="primary_dark">#0a0e27</color>
+    <color name="secondary_dark">#1a1f3a</color>
     <color name="accent_blue">#0f3460</color>
-    <color name="accent_light">#e94560</color>
+    <color name="accent_light">#00BCD4</color>
+
+
     <color name="text_light">#ffffff</color>
     <color name="text_gray">#b0b0b0</color>
+
+
     <color name="success_green">#2ecc71</color>
     <color name="warning_orange">#f39c12</color>
+    <color name="gray_subtle">#555555</color>
+
+
+    <color name="water_light">#00BCD4</color>
+    <color name="water_dark">#00897B</color>
+    <color name="error_red">#e74c3c</color>
 
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>

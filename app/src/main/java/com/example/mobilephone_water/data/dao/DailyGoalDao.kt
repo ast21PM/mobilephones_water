@@ -7,9 +7,19 @@ import com.example.mobilephone_water.data.entity.DailyGoal
 @Dao
 interface DailyGoalDao {
 
-    @Query("SELECT * FROM daily_goals WHERE id = 1")
+    @Query("SELECT * FROM daily_goals LIMIT 1")
     fun getDailyGoal(): LiveData<DailyGoal?>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun setDailyGoal(goal: DailyGoal)
+    suspend fun insertGoal(goal: DailyGoal)
+
+    @Update
+    suspend fun updateGoal(goal: DailyGoal)
+
+    @Delete
+    suspend fun deleteGoal(goal: DailyGoal)
+
+    @Query("DELETE FROM daily_goals")
+    suspend fun deleteAll()
+
 }

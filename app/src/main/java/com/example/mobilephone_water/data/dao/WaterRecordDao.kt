@@ -28,7 +28,6 @@ interface WaterRecordDao {
     @Query("DELETE FROM water_records")
     suspend fun deleteAll()
 
-
     @Query("""
         SELECT COALESCE(CAST(AVG(daily_total) AS INTEGER), 0)
         FROM (
@@ -39,4 +38,7 @@ interface WaterRecordDao {
         )
     """)
     suspend fun getAverageWeekly(): Int
+
+    @Query("DELETE FROM water_records WHERE date = :date")
+    suspend fun deleteRecordsByDate(date: String)
 }

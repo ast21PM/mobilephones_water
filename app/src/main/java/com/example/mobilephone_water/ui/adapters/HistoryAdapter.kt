@@ -22,9 +22,9 @@ class HistoryAdapter(private val dayGroups: List<DayGroup>) :
 
     private fun getCountText(count: Int): String {
         return when {
-            count % 10 == 1 && count % 100 != 11 -> "приём"      // 1, 21, 31, 41...
-            count % 10 in 2..4 && count % 100 !in 12..14 -> "приёма" // 2-4, 22-24, 32-34...
-            else -> "приёмов"                                      // 5-20, 25-30, 35-40...
+            count % 10 == 1 && count % 100 != 11 -> "приём"
+            count % 10 in 2..4 && count % 100 !in 12..14 -> "приёма"
+            else -> "приёмов"
         }
     }
 
@@ -42,7 +42,8 @@ class HistoryAdapter(private val dayGroups: List<DayGroup>) :
                 val date = inputFormat.parse(dayGroup.date)
 
 
-                val outputFormat = SimpleDateFormat("dd.MM.yyyy (EEEE)", Locale.getDefault())
+                val outputFormat = SimpleDateFormat("dd.MM.yyyy (EEEE)", Locale.Builder().setLanguage("ru").setRegion("RU").build())
+
                 tvDayHeader.text = date?.let { outputFormat.format(it) } ?: dayGroup.date
             } catch (e: Exception) {
 
