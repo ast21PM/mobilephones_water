@@ -7,238 +7,325 @@
     android:background="@color/primary_dark"
     android:padding="16dp">
 
-
     <TextView
         android:id="@+id/tv_settings_title"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="⚙️ Настройки уведомлений"
+        android:text="⚙️ Настройки"
         android:textSize="28sp"
         android:textStyle="bold"
         android:textColor="@color/accent_light"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="16dp"
+        android:gravity="center" />
 
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_notifications"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        app:cardCornerRadius="12dp"
-        app:cardBackgroundColor="@color/secondary_dark"
-        app:cardElevation="4dp"
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@id/tv_settings_title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="16dp">
-
-            <TextView
-                android:id="@+id/tv_enable_label"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Включить уведомления"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="@color/text_light"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/switch_notifications"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginEnd="8dp" />
-
-            <Switch
-                android:id="@+id/switch_notifications"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.cardview.widget.CardView>
-
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_interval"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:cardCornerRadius="12dp"
-        app:cardBackgroundColor="@color/secondary_dark"
-        app:cardElevation="4dp"
-        app:layout_constraintTop_toBottomOf="@id/card_notifications"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="16dp">
-
-            <TextView
-                android:id="@+id/tv_interval_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="⏰ Интервал уведомлений:"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="@color/text_light"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tv_notification_interval"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="2 часа"
-                android:textSize="16sp"
-                android:textColor="@color/accent_light"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_interval_label"
-                android:layout_marginTop="8dp" />
-
-            <Button
-                android:id="@+id/btn_change_interval"
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:text="Изменить"
-                android:backgroundTint="@color/accent_blue"
-                android:textColor="@color/text_light"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_interval_label"
-                android:layout_marginTop="8dp" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.cardview.widget.CardView>
-
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_start_time"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:cardCornerRadius="12dp"
-        app:cardBackgroundColor="@color/secondary_dark"
-        app:cardElevation="4dp"
-        app:layout_constraintTop_toBottomOf="@id/card_interval"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="16dp">
-
-            <TextView
-                android:id="@+id/tv_start_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="📅 Начало уведомлений:"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="@color/text_light"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tv_start_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="08:00"
-                android:textSize="16sp"
-                android:textColor="@color/accent_light"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_start_label"
-                android:layout_marginTop="8dp" />
-
-            <Button
-                android:id="@+id/btn_change_start_time"
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:text="Изменить"
-                android:backgroundTint="@color/accent_blue"
-                android:textColor="@color/text_light"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_start_label"
-                android:layout_marginTop="8dp" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.cardview.widget.CardView>
-
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_end_time"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:cardCornerRadius="12dp"
-        app:cardBackgroundColor="@color/secondary_dark"
-        app:cardElevation="4dp"
-        app:layout_constraintTop_toBottomOf="@id/card_start_time"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="16dp">
-
-            <TextView
-                android:id="@+id/tv_end_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="🌙 Конец уведомлений:"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="@color/text_light"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tv_end_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="22:00"
-                android:textSize="16sp"
-                android:textColor="@color/accent_light"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_end_label"
-                android:layout_marginTop="8dp" />
-
-            <Button
-                android:id="@+id/btn_change_end_time"
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:text="Изменить"
-                android:backgroundTint="@color/accent_blue"
-                android:textColor="@color/text_light"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_end_label"
-                android:layout_marginTop="8dp" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.cardview.widget.CardView>
-
-
-    <Button
-        android:id="@+id/btn_reset_settings"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:text="🔄 Сбросить все настройки"
-        android:backgroundTint="@android:color/holo_red_dark"
-        android:textColor="@color/text_light"
-        app:layout_constraintTop_toBottomOf="@id/card_end_time"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="32dp" />
+        android:layout_marginTop="16dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="24dp"
+            android:paddingHorizontal="0dp">
+
+            <!-- УВЕДОМЛЕНИЯ -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_notifications"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="0dp"
+                android:layout_marginTop="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardBackgroundColor="@color/secondary_dark"
+                app:cardElevation="4dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/tv_enable_label"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="📢 Включить уведомления"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/text_light"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/switch_notifications"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginEnd="8dp" />
+
+                    <Switch
+                        android:id="@+id/switch_notifications"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- ИНТЕРВАЛ -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_interval"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                app:cardCornerRadius="12dp"
+                app:cardBackgroundColor="@color/secondary_dark"
+                app:cardElevation="4dp"
+                app:layout_constraintTop_toBottomOf="@id/card_notifications"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/tv_interval_label"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="⏰ Интервал:"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/text_light"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/btn_change_interval" />
+
+                    <Button
+                        android:id="@+id/btn_change_interval"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:text="Изменить"
+                        android:textSize="12sp"
+                        android:backgroundTint="@color/accent_blue"
+                        android:textColor="@color/text_light"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_notification_interval"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2 часа"
+                        android:textSize="14sp"
+                        android:textColor="@color/accent_light"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_interval_label"
+                        android:layout_marginTop="8dp" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- НАЧАЛО ВРЕМЕНИ -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_start_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                app:cardCornerRadius="12dp"
+                app:cardBackgroundColor="@color/secondary_dark"
+                app:cardElevation="4dp"
+                app:layout_constraintTop_toBottomOf="@id/card_interval"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/tv_start_label"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="📅 Начало:"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/text_light"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/btn_change_start_time" />
+
+                    <Button
+                        android:id="@+id/btn_change_start_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:text="Изменить"
+                        android:textSize="12sp"
+                        android:backgroundTint="@color/accent_blue"
+                        android:textColor="@color/text_light"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_start_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="08:00"
+                        android:textSize="14sp"
+                        android:textColor="@color/accent_light"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_start_label"
+                        android:layout_marginTop="8dp" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- КОНЕЦ ВРЕМЕНИ -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_end_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                app:cardCornerRadius="12dp"
+                app:cardBackgroundColor="@color/secondary_dark"
+                app:cardElevation="4dp"
+                app:layout_constraintTop_toBottomOf="@id/card_start_time"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/tv_end_label"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="🌙 Конец:"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/text_light"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/btn_change_end_time" />
+
+                    <Button
+                        android:id="@+id/btn_change_end_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:text="Изменить"
+                        android:textSize="12sp"
+                        android:backgroundTint="@color/accent_blue"
+                        android:textColor="@color/text_light"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_end_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="22:00"
+                        android:textSize="14sp"
+                        android:textColor="@color/accent_light"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_end_label"
+                        android:layout_marginTop="8dp" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- ЗВУК -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_sound"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                app:cardCornerRadius="12dp"
+                app:cardBackgroundColor="@color/secondary_dark"
+                app:cardElevation="4dp"
+                app:layout_constraintTop_toBottomOf="@id/card_end_time"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/tv_sound_label"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="🎵 Звук уведомлений:"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/text_light"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                    <Spinner
+                        android:id="@+id/spinner_sound"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:background="@color/primary_dark"
+                        android:padding="8dp"
+                        app:layout_constraintTop_toBottomOf="@id/tv_sound_label"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginTop="12dp" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- ПОЛИТИКА -->
+            <Button
+                android:id="@+id/btn_privacy_policy"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="📜 Политика конфиденциальности"
+                android:backgroundTint="@color/accent_blue"
+                android:textColor="@color/text_light"
+                android:textSize="14sp"
+                app:cornerRadius="12dp"
+                app:layout_constraintTop_toBottomOf="@id/card_sound"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="16dp"
+                android:layout_marginHorizontal="0dp" />
+
+            <!-- СБРОС -->
+            <Button
+                android:id="@+id/btn_reset_settings"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="🔄 Сбросить все настройки"
+                android:backgroundTint="@android:color/holo_red_dark"
+                android:textColor="@color/text_light"
+                android:textSize="14sp"
+                app:cornerRadius="12dp"
+                app:layout_constraintTop_toBottomOf="@id/btn_privacy_policy"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="8dp"
+                android:layout_marginHorizontal="0dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

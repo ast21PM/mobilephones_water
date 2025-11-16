@@ -1,19 +1,19 @@
 package com.example.mobilephone_water.data.notifications
 
+import android.app.NotificationManager
 import android.content.Context
 import androidx.work.*
 import java.util.concurrent.TimeUnit
 
 class NotificationScheduler(private val context: Context) {
 
-
     fun scheduleNotifications(intervalHours: Int = 2) {
-        val finalInterval = if (intervalHours < 1) 1 else intervalHours // Минимум 1 час
+        val finalInterval = if (intervalHours < 1) 1 else intervalHours
 
         val notificationWork = PeriodicWorkRequestBuilder<NotificationWorker>(
             finalInterval.toLong(),
             TimeUnit.HOURS,
-            15, // Minimum interval 15 minutes
+            15,
             TimeUnit.MINUTES
         ).build()
 
@@ -24,11 +24,24 @@ class NotificationScheduler(private val context: Context) {
         )
     }
 
-
     fun cancelNotifications() {
-        WorkManager.getInstance(context).cancelUniqueWork("water_notification")
-    }
+        try {
+            // ✅ ОТМЕНА WorkManager ЗАДАЧИ
+            WorkManager.getInstance(context).cancelUniqueWork("water_notification")
 
+            // ✅ ОТМЕНА ВСЕХ УВЕДОМЛЕНИЙ
+            val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.cancelAll()
+
+            // ✅ УДАЛЕНИЕ КАНАЛА
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                notificationManager.deleteNotificationChannel("water_reminder")
+            }
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
 
     fun isNotificationEnabled(): Boolean {
         val workInfo = WorkManager.getInstance(context)

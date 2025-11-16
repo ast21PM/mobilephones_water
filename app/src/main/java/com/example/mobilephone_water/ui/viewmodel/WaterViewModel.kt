@@ -8,12 +8,12 @@ import androidx.lifecycle.viewModelScope
 import com.example.mobilephone_water.data.database.WaterDatabase
 import com.example.mobilephone_water.data.entity.DailyGoal
 import com.example.mobilephone_water.data.entity.WaterRecord
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
 class WaterViewModel(application: Application) : AndroidViewModel(application) {
-
 
     private val waterRecordDao = WaterDatabase.getDatabase(application).waterRecordDao()
     private val dailyGoalDao = WaterDatabase.getDatabase(application).dailyGoalDao()
@@ -21,6 +21,7 @@ class WaterViewModel(application: Application) : AndroidViewModel(application) {
     val allRecords: LiveData<List<WaterRecord>> = waterRecordDao.getAllRecords()
     val dailyGoal: LiveData<DailyGoal?> = dailyGoalDao.getDailyGoal()
 
+    // ✅ СРЕДНЯЯ ЗА НЕДЕЛЮ
     private val _averageWeekly = MutableLiveData<Int>(0)
     val averageWeekly: LiveData<Int> = _averageWeekly
 
@@ -32,9 +33,9 @@ class WaterViewModel(application: Application) : AndroidViewModel(application) {
         return waterRecordDao.getTotalAmountByDate(date)
     }
 
-
+    // ✅ ВЫЧИСЛЕНИЕ СРЕДНЕГО ЗА НЕДЕЛЮ
     fun calculateAverageWeekly() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 val average = waterRecordDao.getAverageWeekly()
                 _averageWeekly.postValue(average)
@@ -71,14 +72,15 @@ class WaterViewModel(application: Application) : AndroidViewModel(application) {
             }
         }
     }
+
     fun deleteAllRecordsForDate(date: String) {
         viewModelScope.launch {
             try {
                 waterRecordDao.deleteRecordsByDate(date)
+                calculateAverageWeekly()
             } catch (e: Exception) {
                 e.printStackTrace()
             }
         }
     }
-
 }

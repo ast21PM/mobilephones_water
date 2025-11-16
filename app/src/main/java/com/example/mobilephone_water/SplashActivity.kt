@@ -6,6 +6,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -26,40 +27,53 @@ class SplashActivity : AppCompatActivity() {
 
         val ivLogo = findViewById<ImageView>(R.id.iv_logo)
         val tvTitle = findViewById<TextView>(R.id.tv_splash_title)
+        val tvSubtitle = findViewById<TextView>(R.id.tv_splash_subtitle)
+        val progressBar = findViewById<ProgressBar>(R.id.progress_bar_splash)
+        val tvPercent = findViewById<TextView>(R.id.tv_progress_percent)
 
-
+        // ✅ АНИМАЦИИ
         val fadeInAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_in)
         val slideUpAnimation = AnimationUtils.loadAnimation(this, R.anim.slide_up)
 
-
         ivLogo.startAnimation(fadeInAnimation)
         tvTitle.startAnimation(slideUpAnimation)
+        tvSubtitle.startAnimation(slideUpAnimation)
 
+        // ✅ АНИМАЦИЯ ПОЛОСКИ ЗАГРУЗКИ (ЗАМЕДЛЕННО В 1.5 РАЗА)
+        lifecycleScope.launch {
+            for (i in 0..100 step 5) {
+                progressBar.progress = i
+                tvPercent.text = "$i%"
+                delay(40) // ✅ БЫЛО 30, ТЕПЕРЬ 45 (1.5x)
+            }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) { // Android 13+
-            if (ContextCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.POST_NOTIFICATIONS
-                ) != android.content.pm.PackageManager.PERMISSION_GRANTED
-            ) {
+            // ✅ 100% - готово, ждём 750ms и идём дальше
+            delay(650) // ✅ БЫЛО 500, ТЕПЕРЬ 750 (1.5x)
 
-                ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(Manifest.permission.POST_NOTIFICATIONS),
-                    NOTIFICATION_PERMISSION_CODE
-                )
+            // ✅ ЗАПРОС РАЗРЕШЕНИЙ
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                if (ContextCompat.checkSelfPermission(
+                        this@SplashActivity,
+                        Manifest.permission.POST_NOTIFICATIONS
+                    ) != android.content.pm.PackageManager.PERMISSION_GRANTED
+                ) {
+                    ActivityCompat.requestPermissions(
+                        this@SplashActivity,
+                        arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                        NOTIFICATION_PERMISSION_CODE
+                    )
+                } else {
+                    goToMainActivity()
+                }
             } else {
-
                 goToMainActivity()
             }
-        } else {
-            goToMainActivity()
         }
     }
 
     private fun goToMainActivity() {
         lifecycleScope.launch {
-            delay(3000)
+            delay(4000) // ✅ БЫЛО 3000, ТЕПЕРЬ 4500 (1.5x)
             startActivity(Intent(this@SplashActivity, MainActivity::class.java))
             finish()
         }
@@ -73,7 +87,6 @@ class SplashActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
         if (requestCode == NOTIFICATION_PERMISSION_CODE) {
-
             goToMainActivity()
         }
     }

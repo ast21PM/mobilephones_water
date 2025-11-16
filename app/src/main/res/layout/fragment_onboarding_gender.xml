@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary_dark"
+    android:padding="24dp">
+
+    <!-- Заголовок -->
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Выберите ваш пол"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:textColor="@color/accent_light"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="60dp"
+        android:gravity="center" />
+
+    <!-- Описание -->
+    <TextView
+        android:id="@+id/tv_subtitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Это поможет нам расчитать вашу дневную норму воды"
+        android:textSize="16sp"
+        android:textColor="@color/text_gray"
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        android:gravity="center" />
+
+    <!-- Кнопка Мужской -->
+    <Button
+        android:id="@+id/btn_male"
+        android:layout_width="0dp"
+        android:layout_height="120dp"
+        android:text="👨 Мужской"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:backgroundTint="@color/accent_blue"
+        app:cornerRadius="16dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_subtitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="80dp"
+        android:elevation="8dp" />
+
+    <!-- Кнопка Женский -->
+    <Button
+        android:id="@+id/btn_female"
+        android:layout_width="0dp"
+        android:layout_height="120dp"
+        android:text="👩 Женский"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="@color/text_gray"
+        android:backgroundTint="#333333"
+        app:cornerRadius="16dp"
+        app:layout_constraintTop_toBottomOf="@id/btn_male"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="24dp"
+        android:elevation="8dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

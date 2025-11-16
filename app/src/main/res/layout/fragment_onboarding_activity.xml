@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary_dark"
+    android:padding="24dp">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Частота ваших тренировок"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:textColor="@color/accent_light"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="60dp"
+        android:gravity="center" />
+
+    <TextView
+        android:id="@+id/tv_subtitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:gravity="center"
+        android:text="Это поможет расчитать вашу дневную норму воды"
+        android:textColor="@color/text_gray"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+    <Button
+        android:id="@+id/btn_rare"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:text="🚶 Редко"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@color/text_gray"
+        android:backgroundTint="#333333"
+        app:cornerRadius="14dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_subtitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="60dp"
+        android:elevation="8dp" />
+
+    <Button
+        android:id="@+id/btn_regular"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:text="🏃 Регулярно"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@color/text_light"
+        android:backgroundTint="@color/accent_blue"
+        app:cornerRadius="14dp"
+        app:layout_constraintTop_toBottomOf="@id/btn_rare"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        android:elevation="8dp" />
+
+    <Button
+        android:id="@+id/btn_often"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:text="⚡ Часто"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@color/text_gray"
+        android:backgroundTint="#333333"
+        app:cornerRadius="14dp"
+        app:layout_constraintTop_toBottomOf="@id/btn_regular"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        android:elevation="8dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -52,10 +52,19 @@ class MainFragment : Fragment() {
         viewModel = ViewModelProvider(this)[WaterViewModel::class.java]
         appPreferences = AppPreferences(requireContext())
 
-        if (appPreferences.isFirstLaunch) {
-            viewModel.setDailyGoal(2200)
-            appPreferences.isFirstLaunch = false
+        // ✅ ПОЛУЧАЕМ ДНЕВНУЮ НОРМУ ИЗ PREFERENCES
+        dailyGoal = appPreferences.getDailyWaterGoal()
+
+        // Если это новая установка и норма не была установлена - используем дефолт
+        if (dailyGoal == 2200) {
+            // Проверяем есть ли сохраненные данные профиля
+            val savedWater = appPreferences.getDailyWaterGoal()
+            if (savedWater > 0) {
+                dailyGoal = savedWater
+            }
         }
+
+        viewModel.setDailyGoal(dailyGoal)
 
         initViews(view)
         observeData()
@@ -74,9 +83,9 @@ class MainFragment : Fragment() {
     private fun initViews(view: View) {
         waterProgressView = view.findViewById(R.id.water_progress_view)
         btnAdd250ml = view.findViewById(R.id.btn_add_250ml)
-        btnAdd330ml = view.findViewById(R.id.btn_add_330ml)  // ✅ ДОБАВЛЕНО
+        btnAdd330ml = view.findViewById(R.id.btn_add_330ml)
         btnAdd500ml = view.findViewById(R.id.btn_add_500ml)
-        btnAdd1l = view.findViewById(R.id.btn_add_1l)        // ✅ ДОБАВЛЕНО
+        btnAdd1l = view.findViewById(R.id.btn_add_1l)
         btnMinus100ml = view.findViewById(R.id.btn_minus_100ml)
         btnReset = view.findViewById(R.id.btn_reset)
         tvGoal = view.findViewById(R.id.tv_goal)
@@ -89,11 +98,10 @@ class MainFragment : Fragment() {
     private fun observeData() {
         val currentDate = getCurrentDate()
 
-        viewModel.dailyGoal?.observe(viewLifecycleOwner) { goal ->
-            dailyGoal = goal?.goalAmount ?: 2200
-            waterProgressView.setDailyGoal(dailyGoal)
-            updateGoalText()
-        }
+        // ✅ УСТАНАВЛИВАЕМ ДНЕВНУЮ ЦЕЛЬ
+        viewModel.setDailyGoal(dailyGoal)
+        waterProgressView.setDailyGoal(dailyGoal)
+        updateGoalText()
 
         viewModel.getTotalAmountByDate(currentDate)?.observe(viewLifecycleOwner) { total ->
             val amount = total ?: 0
@@ -109,7 +117,7 @@ class MainFragment : Fragment() {
             showSuccessToast("💧 +200 мл добавлено")
         }
 
-        btnAdd330ml.setOnClickListener {  // ✅ ДОБАВЛЕНО
+        btnAdd330ml.setOnClickListener {
             animateButtonClick(it)
             viewModel.addWaterRecord(330)
             showSuccessToast("💧 +330 мл добавлено")
@@ -121,7 +129,7 @@ class MainFragment : Fragment() {
             showSuccessToast("💧 +500 мл добавлено")
         }
 
-        btnAdd1l.setOnClickListener {  // ✅ ДОБАВЛЕНО
+        btnAdd1l.setOnClickListener {
             animateButtonClick(it)
             viewModel.addWaterRecord(1000)
             showSuccessToast("💧 +1л добавлено")
@@ -173,7 +181,10 @@ class MainFragment : Fragment() {
             .setPositiveButton("✓ Сохранить") { dialog, _ ->
                 val newGoal = editText.text.toString().toIntOrNull()
                 if (newGoal != null && newGoal > 0 && newGoal <= 10000) {
+                    dailyGoal = newGoal
                     viewModel.setDailyGoal(newGoal)
+                    waterProgressView.setDailyGoal(newGoal)
+                    updateGoalText()
                     Toast.makeText(
                         requireContext(),
                         "✅ Цель изменена на $newGoal мл",
