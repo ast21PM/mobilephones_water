@@ -62,8 +62,9 @@
 5. Приложение готово к использованию!
 
 ### Способ 2: Через Android Studio
-git clone https://github.com/YOUR_USERNAME/water-tracker.git
-cd water-tracker
+Клонируй репозиторий
+    git clone https://github.com/ast21PM/mobilephones_water.git
+    cd mobilephones_water
 
 ## 📋 Пример использования
 
