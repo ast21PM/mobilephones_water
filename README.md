@@ -62,8 +62,8 @@
 5. Приложение готово к использованию!
 
 ### Способ 2: Через Android Studio
-Клонируй репозиторий
-    git clone https://github.com/ast21PM/mobilephones_water.git
+Клонируй репозиторий: 
+    git clone https://github.com/ast21PM/mobilephones_water.git\n
     cd mobilephones_water
 
 ## 📋 Пример использования
