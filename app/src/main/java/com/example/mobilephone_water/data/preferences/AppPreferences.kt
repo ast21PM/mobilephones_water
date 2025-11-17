@@ -20,7 +20,7 @@ class AppPreferences(context: Context) {
         private const val KEY_FIRST_LAUNCH = "first_launch"
         private const val KEY_LAST_RESET_DATE = "last_reset_date"
 
-        // ✅ ONBOARDING ДАННЫЕ
+       
         private const val KEY_GENDER = "gender"
         private const val KEY_WEIGHT = "weight"
         private const val KEY_HEIGHT = "height"
@@ -60,7 +60,7 @@ class AppPreferences(context: Context) {
         get() = prefs.getString(KEY_NOTIFICATION_SOUND, "default") ?: "default"
         set(value) = prefs.edit().putString(KEY_NOTIFICATION_SOUND, value).apply()
 
-    // ✅ ФУНКЦИИ ДЛЯ ONBOARDING ДАННЫХ
+    
     fun saveUserProfile(
         gender: String,
         weight: Int,

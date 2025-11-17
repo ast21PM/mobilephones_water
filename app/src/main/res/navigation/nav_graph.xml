@@ -10,7 +10,7 @@
         android:name="com.example.mobilephone_water.MainFragment"
         android:label="@string/main"
         tools:layout="@layout/fragment_main">
-        <!-- Action для перехода в SettingsFragment -->
+       
         <action
             android:id="@+id/action_mainFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />

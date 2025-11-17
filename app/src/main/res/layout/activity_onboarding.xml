@@ -7,7 +7,7 @@
     android:background="@color/primary_dark"
     android:padding="16dp">
 
-    <!-- Индикаторы вкладок -->
+    
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="0dp"
@@ -19,7 +19,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp" />
 
-    <!-- ViewPager -->
+   
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"
         android:layout_width="0dp"
@@ -31,7 +31,7 @@
         android:layout_marginTop="24dp"
         android:layout_marginBottom="24dp" />
 
-    <!-- BUTTONS LAYOUT -->
+    
     <LinearLayout
         android:id="@+id/button_layout"
         android:layout_width="0dp"
@@ -43,7 +43,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Кнопка "Пропустить" -->
+       
         <TextView
             android:id="@+id/btn_skip"
             android:layout_width="wrap_content"
@@ -55,7 +55,7 @@
             android:padding="12dp"
             android:layout_weight="0.4" />
 
-        <!-- Кнопка "Назад" -->
+      
         <Button
             android:id="@+id/btn_back"
             android:layout_width="0dp"
@@ -69,7 +69,7 @@
             android:backgroundTint="@color/text_gray"
             app:cornerRadius="8dp" />
 
-        <!-- Кнопка "Далее" -->
+        
         <Button
             android:id="@+id/btn_next"
             android:layout_width="0dp"

@@ -21,7 +21,7 @@ class WaterViewModel(application: Application) : AndroidViewModel(application) {
     val allRecords: LiveData<List<WaterRecord>> = waterRecordDao.getAllRecords()
     val dailyGoal: LiveData<DailyGoal?> = dailyGoalDao.getDailyGoal()
 
-    // ✅ СРЕДНЯЯ ЗА НЕДЕЛЮ
+   
     private val _averageWeekly = MutableLiveData<Int>(0)
     val averageWeekly: LiveData<Int> = _averageWeekly
 
@@ -33,7 +33,7 @@ class WaterViewModel(application: Application) : AndroidViewModel(application) {
         return waterRecordDao.getTotalAmountByDate(date)
     }
 
-    // ✅ ВЫЧИСЛЕНИЕ СРЕДНЕГО ЗА НЕДЕЛЮ
+    
     fun calculateAverageWeekly() {
         viewModelScope.launch(Dispatchers.IO) {
             try {

@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // ✅ ПРОВЕРКА: Если первый запуск - идем в Onboarding
+        
         val appPreferences = AppPreferences(this)
         if (appPreferences.isFirstLaunch) {
             startActivity(Intent(this, OnboardingActivity::class.java))
@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_main)
 
-        // Запрос разрешения на уведомления
+        
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(
                     this,

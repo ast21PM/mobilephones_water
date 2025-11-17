@@ -8,7 +8,7 @@ data class WaterRecord(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
 
-    val amount: Int,              // Количество воды в мл
-    val timestamp: Long,          // Время добавления записи
-    val date: String              // Дата в формате "yyyy-MM-dd"
+    val amount: Int,             
+    val timestamp: Long,          
+    val date: String             
 )

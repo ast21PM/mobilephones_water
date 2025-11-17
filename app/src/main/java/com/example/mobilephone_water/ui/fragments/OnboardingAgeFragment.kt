@@ -30,9 +30,9 @@ class OnboardingAgeFragment : Fragment() {
         seekBarAge = view.findViewById(R.id.seekBar_age)
         tvAge = view.findViewById(R.id.tv_age)
 
-        // ✅ Диапазон 0-100 лет
-        seekBarAge.max = 100 // 0-100 = 100
-        seekBarAge.progress = 25 // Стартовое значение 25
+        
+        seekBarAge.max = 100 
+        seekBarAge.progress = 25 
 
         seekBarAge.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {

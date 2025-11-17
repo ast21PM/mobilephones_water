@@ -41,7 +41,7 @@ class OnboardingGenderFragment : Fragment() {
             (activity as? OnboardingActivity)?.selectedGender = selectedGender
         }
 
-        // По умолчанию выбран мужской
+        
         updateButtonStates()
     }
 

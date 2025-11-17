@@ -110,19 +110,19 @@ class SettingsFragment : Fragment() {
         val currentIndex = soundValues.indexOf(currentSound).coerceAtLeast(0)
         spinnerSound.setSelection(currentIndex)
 
-        // ✅ СЛУШАТЕЛЬ УСТАНАВЛИВАЕТСЯ ПОСЛЕ setSelection()
+        
         spinnerSound.onItemSelectedListener = object : android.widget.AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: android.widget.AdapterView<*>?, view: View?, position: Int, id: Long) {
-                // ✅ Пропускаем первую инициализацию (при открытии вкладки)
+              
                 if (isInitialLoad) {
                     isInitialLoad = false
                     return
                 }
 
-                // ✅ Сохраняем выбранный звук
+                
                 appPreferences.notificationSound = soundValues[position]
 
-                // ✅ Сразу воспроизводим звук при выборе
+                
                 playTestSound(soundValues[position])
             }
 
@@ -135,10 +135,10 @@ class SettingsFragment : Fragment() {
             appPreferences.isNotificationEnabled = isChecked
 
             if (isChecked) {
-                // ✅ ВКЛЮЧЕНИЕ УВЕДОМЛЕНИЙ
+                
                 notificationScheduler.scheduleNotifications(appPreferences.notificationInterval / 60)
 
-                // ✅ СОЗДАЁМ КАНАЛ УВЕДОМЛЕНИЙ ЕСЛИ ЕГО НЕТ
+                
                 createNotificationChannel()
 
                 Toast.makeText(
@@ -147,10 +147,10 @@ class SettingsFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
-                // ✅ ОТКЛЮЧЕНИЕ УВЕДОМЛЕНИЙ
+               
                 notificationScheduler.cancelNotifications()
 
-                // ✅ УДАЛЯЕМ КАНАЛ УВЕДОМЛЕНИЙ ИЗ СИСТЕМЫ
+               
                 deleteNotificationChannel()
 
                 Toast.makeText(
@@ -182,7 +182,7 @@ class SettingsFragment : Fragment() {
         }
     }
 
-    // ✅ СОЗДАНИЕ КАНАЛА УВЕДОМЛЕНИЙ
+    
     private fun createNotificationChannel() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             val notificationManager = requireContext().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -198,7 +198,7 @@ class SettingsFragment : Fragment() {
         }
     }
 
-    // ✅ УДАЛЕНИЕ КАНАЛА УВЕДОМЛЕНИЙ
+    
     private fun deleteNotificationChannel() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             val notificationManager = requireContext().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -206,9 +206,9 @@ class SettingsFragment : Fragment() {
         }
     }
 
-    // ✅ ФУНКЦИЯ ВОСПРОИЗВЕДЕНИЯ ЗВУКА
+    
     private fun playTestSound(soundType: String) {
-        // Останови предыдущий звук если он играет
+        
         if (mediaPlayer != null && mediaPlayer!!.isPlaying) {
             mediaPlayer!!.stop()
             mediaPlayer!!.release()
@@ -229,7 +229,7 @@ class SettingsFragment : Fragment() {
                 isLooping = false
                 start()
 
-                // Останови через 1 секунду
+              
                 Handler(Looper.getMainLooper()).postDelayed({
                     if (isPlaying) {
                         stop()
@@ -270,7 +270,7 @@ class SettingsFragment : Fragment() {
                 tvNotificationInterval.text = items[selectedIndex]
 
                 if (appPreferences.isNotificationEnabled) {
-                    // ✅ ДОБАВЬ ПЕРЕСОЗДАНИЕ КАНАЛА
+                    
                     createNotificationChannel()
 
                     notificationScheduler.cancelNotifications()
@@ -368,12 +368,12 @@ class SettingsFragment : Fragment() {
                 appPreferences.notificationEndTime = "22:00"
                 appPreferences.notificationSound = "droplet"
 
-                // ✅ СБРАСЫВАЕМ флаг чтобы не было Toast при загрузке
+               
                 isInitialLoad = true
 
                 loadSettings()
 
-                // ✅ СОЗДАЁМ КАНАЛ ЕСЛИ УВЕДОМЛЕНИЯ ВКЛЮЧЕНЫ
+                
                 createNotificationChannel()
 
                 notificationScheduler.cancelNotifications()

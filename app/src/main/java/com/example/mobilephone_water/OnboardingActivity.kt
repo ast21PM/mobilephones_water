@@ -15,7 +15,7 @@ class OnboardingActivity : AppCompatActivity() {
 
     private lateinit var viewPager: ViewPager2
     private lateinit var btnNext: Button
-    private lateinit var btnBack: Button  // ✅ НОВАЯ КНОПКА
+    private lateinit var btnBack: Button  
     private lateinit var btnSkip: TextView
     private lateinit var tabLayout: TabLayout
     private lateinit var appPreferences: AppPreferences
@@ -35,7 +35,7 @@ class OnboardingActivity : AppCompatActivity() {
 
         viewPager = findViewById(R.id.viewPager)
         btnNext = findViewById(R.id.btn_next)
-        btnBack = findViewById(R.id.btn_back)  // ✅ НОВАЯ КНОПКА
+        btnBack = findViewById(R.id.btn_back)  
         btnSkip = findViewById(R.id.btn_skip)
         tabLayout = findViewById(R.id.tabLayout)
 
@@ -44,7 +44,7 @@ class OnboardingActivity : AppCompatActivity() {
 
         TabLayoutMediator(tabLayout, viewPager) { _, _ -> }.attach()
 
-        // ✅ КНОПКА "ДАЛЕЕ"
+        
         btnNext.setOnClickListener {
             if (viewPager.currentItem < 6) {
                 viewPager.currentItem += 1
@@ -53,29 +53,29 @@ class OnboardingActivity : AppCompatActivity() {
             }
         }
 
-        // ✅ НОВАЯ КНОПКА "НАЗАД"
+       
         btnBack.setOnClickListener {
             if (viewPager.currentItem > 0) {
                 viewPager.currentItem -= 1
             }
         }
 
-        // ✅ КНОПКА "ПРОПУСТИТЬ"
+        
         btnSkip.setOnClickListener {
             saveDataAndFinish()
         }
 
-        // ✅ ИЗМЕНЕНИЕ ТЕКСТА И ВИДИМОСТИ КНОПОК ПРИ ПЕРЕХОДЕ
+        
         viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
-                // ✅ КНОПКА NEXT
+                
                 btnNext.text = if (position == 6) "Завершить" else "Далее"
 
-                // ✅ СКРЫТЬ КНОПКУ BACK НА ПЕРВОЙ СТРАНИЦЕ
+                
                 btnBack.isEnabled = position > 0
-                btnBack.alpha = if (position > 0) 1f else 0.5f  // Полупрозрачная на первой странице
+                btnBack.alpha = if (position > 0) 1f else 0.5f 
 
-                // ✅ СКРЫТЬ КНОПКУ SKIP НА ПОСЛЕДНЕЙ СТРАНИЦЕ
+              
                 btnSkip.isEnabled = position < 6
                 btnSkip.alpha = if (position < 6) 1f else 0.5f
             }

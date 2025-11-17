@@ -52,12 +52,12 @@ class MainFragment : Fragment() {
         viewModel = ViewModelProvider(this)[WaterViewModel::class.java]
         appPreferences = AppPreferences(requireContext())
 
-        // ✅ ПОЛУЧАЕМ ДНЕВНУЮ НОРМУ ИЗ PREFERENCES
+        
         dailyGoal = appPreferences.getDailyWaterGoal()
 
-        // Если это новая установка и норма не была установлена - используем дефолт
+        
         if (dailyGoal == 2200) {
-            // Проверяем есть ли сохраненные данные профиля
+            
             val savedWater = appPreferences.getDailyWaterGoal()
             if (savedWater > 0) {
                 dailyGoal = savedWater
@@ -98,7 +98,7 @@ class MainFragment : Fragment() {
     private fun observeData() {
         val currentDate = getCurrentDate()
 
-        // ✅ УСТАНАВЛИВАЕМ ДНЕВНУЮ ЦЕЛЬ
+     
         viewModel.setDailyGoal(dailyGoal)
         waterProgressView.setDailyGoal(dailyGoal)
         updateGoalText()

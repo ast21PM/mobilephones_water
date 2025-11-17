@@ -18,7 +18,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginBottom="60dp" />
 
-    <!-- КОНТЕЙНЕР ДЛЯ ЦЕНТРИРОВАННОГО ТЕКСТА -->
+    
     <LinearLayout
         android:id="@+id/text_container"
         android:layout_width="match_parent"
@@ -52,7 +52,7 @@
 
     </LinearLayout>
 
-    <!-- ПОЛОСКА ЗАГРУЗКИ -->
+    
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

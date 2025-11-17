@@ -26,14 +26,14 @@ class NotificationScheduler(private val context: Context) {
 
     fun cancelNotifications() {
         try {
-            // ✅ ОТМЕНА WorkManager ЗАДАЧИ
+            
             WorkManager.getInstance(context).cancelUniqueWork("water_notification")
 
-            // ✅ ОТМЕНА ВСЕХ УВЕДОМЛЕНИЙ
+           
             val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.cancelAll()
 
-            // ✅ УДАЛЕНИЕ КАНАЛА
+          
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
                 notificationManager.deleteNotificationChannel("water_reminder")
             }

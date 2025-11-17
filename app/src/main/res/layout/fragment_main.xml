@@ -9,7 +9,7 @@
     android:padding="16dp"
     tools:context=".MainFragment">
 
-    <!-- Заголовок -->
+   
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
@@ -23,7 +23,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="75dp" />
 
-    <!-- Совет -->
+   
     <TextView
         android:id="@+id/tv_tip"
         android:layout_width="0dp"
@@ -39,7 +39,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Прогресс круг -->
+   
     <com.example.mobilephone_water.ui.views.WaterProgressView
         android:id="@+id/water_progress_view"
         android:layout_width="0dp"
@@ -51,7 +51,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Текст цели -->
+   
     <TextView
         android:id="@+id/tv_goal"
         android:layout_width="0dp"
@@ -70,7 +70,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="20dp" />
 
-    <!-- СТРОКА 1: +200 мл, +330 мл (БЕЗ ПЕРЕНОСА) -->
+  
     <Button
         android:id="@+id/btn_add_250ml"
         android:layout_width="0dp"
@@ -107,7 +107,7 @@
         android:layout_marginStart="4dp"
         android:elevation="4dp" />
 
-    <!-- СТРОКА 2: +500 мл, +1л (БЕЗ ПЕРЕНОСА) -->
+   
     <Button
         android:id="@+id/btn_add_500ml"
         android:layout_width="0dp"
@@ -144,7 +144,7 @@
         android:layout_marginStart="4dp"
         android:elevation="4dp" />
 
-    <!-- СТРОКА 3: -100 мл, Сброс (БЕЗ ПЕРЕНОСА) -->
+ 
     <Button
         android:id="@+id/btn_minus_100ml"
         android:layout_width="0dp"

@@ -36,19 +36,19 @@ class OnboardingResultFragment : Fragment() {
         tvWaterAmount = view.findViewById(R.id.tv_water_amount)
         tvWaterInfo = view.findViewById(R.id.tv_water_info)
 
-        // Скрываем результаты изначально
+        
         tvResult.alpha = 0f
         tvWaterAmount.alpha = 0f
         tvWaterInfo.alpha = 0f
 
-        // Запускаем анимацию загрузки
+        
         startLoadingAnimation()
     }
 
     private fun startLoadingAnimation() {
         val activity = activity as? OnboardingActivity ?: return
 
-        // Симуляция загрузки 3 секунды
+        
         ValueAnimator.ofInt(0, 100).apply {
             duration = 3000
             addUpdateListener { animation ->
@@ -70,10 +70,10 @@ class OnboardingResultFragment : Fragment() {
     }
 
     private fun showResults(activity: OnboardingActivity) {
-        // Рассчитываем воду
+       
         val dailyWater = calculateDailyWater(activity)
 
-        // Анимация появления результата
+        
         tvResult.animate()
             .alpha(1f)
             .setDuration(500)
@@ -89,7 +89,7 @@ class OnboardingResultFragment : Fragment() {
             .setDuration(900)
             .start()
 
-        // Устанавливаем текст
+        
         tvResult.text = "💧 Ваша ежедневная норма воды:"
         tvWaterAmount.text = "${dailyWater / 1000}.${(dailyWater % 1000) / 100} л"
 
@@ -110,7 +110,7 @@ class OnboardingResultFragment : Fragment() {
         val selectedAge = activity.selectedAge
         val selectedActivity = activity.selectedActivity
 
-        // ✅ НАУЧНАЯ ФОРМУЛА Харриса-Бенедикта
+        
         val bmr = if (selectedGender == "Мужской") {
             88.362 + (13.397 * selectedWeight) + (4.799 * selectedHeight) - (5.677 * selectedAge)
         } else {

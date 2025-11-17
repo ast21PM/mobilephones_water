@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "daily_goals")
 data class DailyGoal(
     @PrimaryKey
-    val id: Int = 1,              // Всегда 1, т.к. цель одна
+    val id: Int = 1,              
 
-    val goalAmount: Int           // Цель в мл (например, 2000 мл)
+    val goalAmount: Int           
 )

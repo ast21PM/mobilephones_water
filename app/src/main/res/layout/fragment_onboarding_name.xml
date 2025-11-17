@@ -22,7 +22,7 @@
         android:layout_marginTop="60dp"
         android:gravity="center" />
 
-    <!-- Описание -->
+
     <TextView
         android:id="@+id/tv_subtitle"
         android:layout_width="0dp"
@@ -36,7 +36,7 @@
         android:layout_marginTop="16dp"
         android:gravity="center" />
 
-    <!-- Поле для ввода имени -->
+
     <EditText
         android:id="@+id/et_name"
         android:layout_width="0dp"

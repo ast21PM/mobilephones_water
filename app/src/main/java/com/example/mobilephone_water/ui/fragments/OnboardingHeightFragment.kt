@@ -30,9 +30,9 @@ class OnboardingHeightFragment : Fragment() {
         seekBarHeight = view.findViewById(R.id.seekBar_height)
         tvHeight = view.findViewById(R.id.tv_height)
 
-        // ✅ Диапазон 100-230 см
-        seekBarHeight.max = 130 // 230 - 100 = 130
-        seekBarHeight.progress = 70 // 170 - 100 = 70 (стартовое значение)
+        
+        seekBarHeight.max = 130 
+        seekBarHeight.progress = 70 
 
         seekBarHeight.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {

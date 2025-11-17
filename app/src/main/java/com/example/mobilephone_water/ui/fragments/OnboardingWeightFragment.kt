@@ -30,9 +30,9 @@ class OnboardingWeightFragment : Fragment() {
         seekBarWeight = view.findViewById(R.id.seekBar_weight)
         tvWeight = view.findViewById(R.id.tv_weight)
 
-        // ✅ Диапазон 0-300 кг
-        seekBarWeight.max = 300 // 0-300 = 300
-        seekBarWeight.progress = 70 // Стартовое значение 70
+        
+        seekBarWeight.max = 300 
+        seekBarWeight.progress = 70 
 
         seekBarWeight.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {

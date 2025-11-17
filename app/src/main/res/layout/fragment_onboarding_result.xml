@@ -21,7 +21,7 @@
         android:layout_marginTop="20dp"
         android:gravity="center" />
 
-    <!-- Прогресс бар -->
+    
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="0dp"
@@ -34,7 +34,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Статус загрузки -->
+   
     <TextView
         android:id="@+id/tv_status"
         android:layout_width="0dp"
@@ -48,7 +48,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:gravity="center" />
 
-    <!-- Результат -->
+ 
     <TextView
         android:id="@+id/tv_result"
         android:layout_width="0dp"

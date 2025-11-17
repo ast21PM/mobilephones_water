@@ -31,7 +31,7 @@ class SplashActivity : AppCompatActivity() {
         val progressBar = findViewById<ProgressBar>(R.id.progress_bar_splash)
         val tvPercent = findViewById<TextView>(R.id.tv_progress_percent)
 
-        // ✅ АНИМАЦИИ
+        
         val fadeInAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_in)
         val slideUpAnimation = AnimationUtils.loadAnimation(this, R.anim.slide_up)
 
@@ -39,18 +39,18 @@ class SplashActivity : AppCompatActivity() {
         tvTitle.startAnimation(slideUpAnimation)
         tvSubtitle.startAnimation(slideUpAnimation)
 
-        // ✅ АНИМАЦИЯ ПОЛОСКИ ЗАГРУЗКИ (ЗАМЕДЛЕННО В 1.5 РАЗА)
+        
         lifecycleScope.launch {
             for (i in 0..100 step 5) {
                 progressBar.progress = i
                 tvPercent.text = "$i%"
-                delay(40) // ✅ БЫЛО 30, ТЕПЕРЬ 45 (1.5x)
+                delay(40) 
             }
 
-            // ✅ 100% - готово, ждём 750ms и идём дальше
-            delay(650) // ✅ БЫЛО 500, ТЕПЕРЬ 750 (1.5x)
+            
+            delay(650) 
 
-            // ✅ ЗАПРОС РАЗРЕШЕНИЙ
+            
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 if (ContextCompat.checkSelfPermission(
                         this@SplashActivity,
@@ -73,7 +73,7 @@ class SplashActivity : AppCompatActivity() {
 
     private fun goToMainActivity() {
         lifecycleScope.launch {
-            delay(4000) // ✅ БЫЛО 3000, ТЕПЕРЬ 4500 (1.5x)
+            delay(4000) 
             startActivity(Intent(this@SplashActivity, MainActivity::class.java))
             finish()
         }

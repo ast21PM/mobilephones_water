@@ -22,15 +22,15 @@ class WaterProgressView @JvmOverloads constructor(
     private var wavePhase = 0f
     private var waveAnimator: ValueAnimator? = null
 
-    // Частицы-капли
+    
     private val waterDrops = mutableListOf<WaterDrop>()
     private val maxDrops = 15
 
-    // Пузырьки
+    
     private val bubbles = mutableListOf<Bubble>()
     private val maxBubbles = 8
 
-    // Паинты
+  
     private val circlePaint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val circleBackgroundPaint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val waterPaint = Paint(Paint.ANTI_ALIAS_FLAG)
@@ -41,7 +41,7 @@ class WaterProgressView @JvmOverloads constructor(
     private val bubblePaint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val glowPaint = Paint(Paint.ANTI_ALIAS_FLAG)
 
-    // Цвета (ТЕМНАЯ ТЕМА)
+    
     private val circleColor = Color.parseColor("#1a1f3a")
     private val waterColor = Color.parseColor("#00BCD4")
     private val waterDarkColor = Color.parseColor("#00897B")
@@ -49,7 +49,7 @@ class WaterProgressView @JvmOverloads constructor(
     private val labelTextColor = Color.parseColor("#b0b0b0")
     private val valueTextColor = Color.parseColor("#ffffff")
 
-    // Переменная для цели
+    
     private var dailyGoalAmount = 2237
     private var currentAmount = 0
 
@@ -120,15 +120,15 @@ class WaterProgressView @JvmOverloads constructor(
         val centerY = height * 0.35f
         val radius = minOf(width, height) * 0.32f
 
-        // Свечение при достижении цели
+       
         if (progress >= 100f) {
             drawGoalAchievedGlow(canvas, centerX, centerY, radius)
         }
 
-        // Фон круга
+        
         canvas.drawCircle(centerX, centerY, radius, circleBackgroundPaint)
 
-        // Рисуем воду внутри круга с обрезкой
+        
         canvas.save()
         val clipPath = Path()
         clipPath.addCircle(centerX, centerY, radius, Path.Direction.CW)
@@ -136,31 +136,31 @@ class WaterProgressView @JvmOverloads constructor(
 
         drawWater(canvas, centerX, centerY, radius)
 
-        // Пузырьки в воде
+        
         if (currentWaterLevel > 5f) {
             drawBubbles(canvas, centerX, centerY, radius)
         }
 
         canvas.restore()
 
-        // Капли снаружи при добавлении воды
+      
         drawWaterDrops(canvas)
 
-        // Внешний круг (прогресс с градиентом)
+       
         drawProgressCircle(canvas, centerX, centerY, radius)
 
-        // Процент в центре (с адаптивным цветом)
+        
         drawCenterText(canvas, centerX, centerY, radius)
 
-        // Информация снизу
+        
         drawBottomInfo(canvas, centerX, centerY + radius + 80f)
     }
 
     private fun drawProgressCircle(canvas: Canvas, centerX: Float, centerY: Float, radius: Float) {
-        // Фоновый круг
+       
         canvas.drawCircle(centerX, centerY, radius, circlePaint)
 
-        // Прогресс-круг с градиентом
+        
         if (progress > 0) {
             val progressPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
                 style = Paint.Style.STROKE
@@ -187,7 +187,7 @@ class WaterProgressView @JvmOverloads constructor(
     }
 
     private fun drawGoalAchievedGlow(canvas: Canvas, centerX: Float, centerY: Float, radius: Float) {
-        // Пульсирующее свечение
+      
         val glowAlpha = ((sin(wavePhase * Math.PI * 4) + 1) / 2 * 100 + 50).toInt()
         glowPaint.color = Color.argb(glowAlpha, 79, 195, 247)
 
@@ -203,7 +203,7 @@ class WaterProgressView @JvmOverloads constructor(
             Color.parseColor("#4FC3F7")
         }
 
-        // ✅ ТЕНЬ НА ПРОЦЕНТ
+      
         textPaint.setShadowLayer(8f, 2f, 2f, Color.parseColor("#80000000"))
         textPaint.color = textColor
         canvas.drawText(progressText, centerX, centerY + 25f, textPaint)
@@ -217,7 +217,7 @@ class WaterProgressView @JvmOverloads constructor(
             else -> "Начни день правильно!"
         }
 
-        // ✅ ТЕНЬ НА МОТИВИРУЮЩИЙ ТЕКСТ
+      
         val motivationPaint = Paint(labelPaint).apply {
             textSize = 40f
             color = if (currentWaterLevel > 40f) Color.WHITE else labelTextColor
@@ -225,12 +225,12 @@ class WaterProgressView @JvmOverloads constructor(
         }
         canvas.drawText(motivationText, centerX, centerY + 85f, motivationPaint)
 
-        // ✅ ОБЯЗАТЕЛЬНО! Очистить тень
+        
         textPaint.clearShadowLayer()
     }
 
     private fun drawWater(canvas: Canvas, centerX: Float, centerY: Float, radius: Float) {
-        // Анимация уровня воды
+        
         if (kotlin.math.abs(currentWaterLevel - targetWaterLevel) > 0.01f) {
             currentWaterLevel += (targetWaterLevel - currentWaterLevel) * 0.03f // Медленнее (было 0.05f)
             invalidate()
@@ -240,7 +240,7 @@ class WaterProgressView @JvmOverloads constructor(
 
         if (currentWaterLevel <= 0) return
 
-        // Многослойный градиент воды
+      
         val waterGradient = LinearGradient(
             0f, waterLevel - 50f,
             0f, centerY + radius,
@@ -257,7 +257,7 @@ class WaterProgressView @JvmOverloads constructor(
 
         val path = Path()
 
-        // Двойная волна для реалистичности
+       
         val waveAmplitude1 = 12f
         val waveAmplitude2 = 8f
         val waveFrequency = 2.5f
@@ -282,7 +282,7 @@ class WaterProgressView @JvmOverloads constructor(
 
         canvas.drawPath(path, waterPaint)
 
-        // Динамические блики
+       
         val highlightPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
             color = Color.parseColor("#60FFFFFF")
             maskFilter = BlurMaskFilter(15f, BlurMaskFilter.Blur.NORMAL)
@@ -358,14 +358,14 @@ class WaterProgressView @JvmOverloads constructor(
         currentAmount = ((target / 100f) * dailyGoalAmount).toInt()
 
         if (animated) {
-            // Добавляем капли при добавлении воды
+           
             if (target > progress) {
                 addWaterDrops()
             }
 
             // Анимация процента
             ValueAnimator.ofFloat(progress, target).apply {
-                duration = 2500 // Замедлили (было 1500)
+                duration = 2500 
                 interpolator = DecelerateInterpolator()
                 addUpdateListener { animation ->
                     progress = animation.animatedValue as Float
@@ -405,7 +405,7 @@ class WaterProgressView @JvmOverloads constructor(
 
     private fun startWaveAnimation() {
         waveAnimator = ValueAnimator.ofFloat(0f, 1f).apply {
-            duration = 8000 // Замедлили в 2.7 раза (было 3000)
+            duration = 8000 
             repeatCount = ValueAnimator.INFINITE
             repeatMode = ValueAnimator.RESTART
             addUpdateListener { animation ->
@@ -417,7 +417,7 @@ class WaterProgressView @JvmOverloads constructor(
     }
 
     private fun startParticleAnimation() {
-        // Инициализация пузырьков
+       
         val centerX = width / 2f
         val centerY = height * 0.35f
         val radius = minOf(width, height) * 0.32f
@@ -434,7 +434,7 @@ class WaterProgressView @JvmOverloads constructor(
         waveAnimator?.cancel()
     }
 
-    // Класс для капель
+    
     private data class WaterDrop(
         var x: Float,
         var y: Float,
@@ -443,26 +443,26 @@ class WaterProgressView @JvmOverloads constructor(
         var alpha: Float = 1f
     ) {
         fun update() {
-            velocityY += 0.4f // Замедлили падение (было 0.8f)
+            velocityY += 0.4f 
             y += velocityY
-            alpha -= 0.01f // Медленнее исчезают (было 0.02f)
+            alpha -= 0.01f 
         }
     }
 
-    // Класс для пузырьков
+
     private data class Bubble(
         var x: Float,
         var y: Float,
         val size: Float,
         var alpha: Float,
-        var velocityY: Float = Random.nextFloat() * 1 + 0.5f, // Медленнее (было * 2 + 1f)
-        var wobble: Float = Random.nextFloat() * 1f // Меньше покачивание (было * 2f)
+        var velocityY: Float = Random.nextFloat() * 1 + 0.5f, 
+        var wobble: Float = Random.nextFloat() * 1f 
     ) {
         private var wobblePhase = Random.nextFloat() * Math.PI.toFloat() * 2
 
         fun update() {
             y -= velocityY
-            wobblePhase += 0.05f // Медленнее покачивание (было 0.1f)
+            wobblePhase += 0.05f 
             x += sin(wobblePhase.toDouble()).toFloat() * wobble
             alpha = 0.6f
         }
@@ -470,8 +470,8 @@ class WaterProgressView @JvmOverloads constructor(
         fun reset(centerX: Float, centerY: Float, radius: Float, waterLevel: Float) {
             x = centerX + (Random.nextFloat() - 0.5f) * radius * 1.5f
             y = centerY + radius - 20f
-            velocityY = Random.nextFloat() * 1 + 0.5f // Медленнее (было * 2 + 1f)
-            wobble = Random.nextFloat() * 1f // Меньше покачивание (было * 2f)
+            velocityY = Random.nextFloat() * 1 + 0.5f 
+            wobble = Random.nextFloat() * 1f
         }
     }
 }

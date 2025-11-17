@@ -43,7 +43,7 @@ class NotificationWorker(context: Context, params: WorkerParameters) : Worker(co
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
-        // ✅ ПОЛУЧИ ВЫБРАННЫЙ ЗВУК ИЗ НАСТРОЕК (ТОЛЬКОСтв
+        
         val selectedSound = appPreferences.notificationSound
         val soundUri = when (selectedSound) {
             "droplet" -> Uri.parse("android.resource://${applicationContext.packageName}/${R.raw.droplet}")
