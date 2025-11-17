@@ -55,15 +55,15 @@
 ## 📦 Установка
 
 ### Способ 1: Через APK-файл
-1. Скачай `Water_Tracker_v1.0.apk` из [Release](https://github.com/YOUR_USERNAME/water-tracker/releases)
+1. **Скачай последний APK** из [Release](https://github.com/ast21PM/mobilephones_water/releases)
 2. Перенеси файл на телефон
 3. Разреши установку неизвестных источников в настройках
 4. Открой APK и нажми "Установить"
 5. Приложение готово к использованию!
 
 ### Способ 2: Через Android Studio
-git clone https://github.com/YOUR_USERNAME/water-tracker.git
-cd water-tracker
+Клонируй репозиторий: 
+    git clone https://github.com/ast21PM/mobilephones_water.git , дальше в терминале пропиши - cd mobilephones_water
 
 ## 📋 Пример использования
 
