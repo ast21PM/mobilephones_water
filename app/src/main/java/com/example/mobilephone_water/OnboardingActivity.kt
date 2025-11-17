@@ -15,10 +15,10 @@ class OnboardingActivity : AppCompatActivity() {
 
     private lateinit var viewPager: ViewPager2
     private lateinit var btnNext: Button
+    private lateinit var btnBack: Button  // ✅ НОВАЯ КНОПКА
     private lateinit var btnSkip: TextView
     private lateinit var tabLayout: TabLayout
     private lateinit var appPreferences: AppPreferences
-
 
     var selectedGender: String = "Мужской"
     var selectedWeight: Int = 70
@@ -35,38 +35,54 @@ class OnboardingActivity : AppCompatActivity() {
 
         viewPager = findViewById(R.id.viewPager)
         btnNext = findViewById(R.id.btn_next)
+        btnBack = findViewById(R.id.btn_back)  // ✅ НОВАЯ КНОПКА
         btnSkip = findViewById(R.id.btn_skip)
         tabLayout = findViewById(R.id.tabLayout)
 
         val adapter = OnboardingPagerAdapter(this)
         viewPager.adapter = adapter
 
-
         TabLayoutMediator(tabLayout, viewPager) { _, _ -> }.attach()
 
+        // ✅ КНОПКА "ДАЛЕЕ"
         btnNext.setOnClickListener {
             if (viewPager.currentItem < 6) {
                 viewPager.currentItem += 1
             } else {
-
                 saveDataAndFinish()
             }
         }
 
+        // ✅ НОВАЯ КНОПКА "НАЗАД"
+        btnBack.setOnClickListener {
+            if (viewPager.currentItem > 0) {
+                viewPager.currentItem -= 1
+            }
+        }
+
+        // ✅ КНОПКА "ПРОПУСТИТЬ"
         btnSkip.setOnClickListener {
             saveDataAndFinish()
         }
 
-
+        // ✅ ИЗМЕНЕНИЕ ТЕКСТА И ВИДИМОСТИ КНОПОК ПРИ ПЕРЕХОДЕ
         viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
+                // ✅ КНОПКА NEXT
                 btnNext.text = if (position == 6) "Завершить" else "Далее"
+
+                // ✅ СКРЫТЬ КНОПКУ BACK НА ПЕРВОЙ СТРАНИЦЕ
+                btnBack.isEnabled = position > 0
+                btnBack.alpha = if (position > 0) 1f else 0.5f  // Полупрозрачная на первой странице
+
+                // ✅ СКРЫТЬ КНОПКУ SKIP НА ПОСЛЕДНЕЙ СТРАНИЦЕ
+                btnSkip.isEnabled = position < 6
+                btnSkip.alpha = if (position < 6) 1f else 0.5f
             }
         })
     }
 
     private fun saveDataAndFinish() {
-
         val dailyWater = calculateDailyWater()
 
         appPreferences.saveUserProfile(
@@ -80,21 +96,16 @@ class OnboardingActivity : AppCompatActivity() {
         )
         appPreferences.isFirstLaunch = false
 
-
         startActivity(Intent(this, MainActivity::class.java))
         finish()
     }
 
     private fun calculateDailyWater(): Int {
-
-
-
         val bmr = if (selectedGender == "Мужской") {
             88.362 + (13.397 * selectedWeight) + (4.799 * selectedHeight) - (5.677 * selectedAge)
         } else {
             447.593 + (9.247 * selectedWeight) + (3.098 * selectedHeight) - (4.330 * selectedAge)
         }
-
 
         val activityMultiplier = when (selectedActivity) {
             "Редко" -> 1.2
@@ -103,18 +114,10 @@ class OnboardingActivity : AppCompatActivity() {
             else -> 1.55
         }
 
-
         val tdee = (bmr * activityMultiplier).toInt()
-
-
         val waterFromCalories = (tdee * 0.5).toInt()
-
-
         val waterFromWeight = selectedWeight * 35
-
-
         val averageWater = (waterFromCalories + waterFromWeight) / 2
-
 
         val extraWaterForActivity = when (selectedActivity) {
             "Редко" -> 0
@@ -123,16 +126,13 @@ class OnboardingActivity : AppCompatActivity() {
             else -> 300
         }
 
-
         val totalWater = averageWater + extraWaterForActivity
-
 
         val finalWater = if (selectedGender == "Мужской") {
             (totalWater * 1.12).toInt()
         } else {
             totalWater
         }
-
 
         return finalWater.coerceIn(1500, 4000)
     }
