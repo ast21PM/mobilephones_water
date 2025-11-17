@@ -63,8 +63,8 @@
 
 ### Способ 2: Через Android Studio
 Клонируй репозиторий: 
-    git clone https://github.com/ast21PM/mobilephones_water.git\n
-    cd mobilephones_water
+    git clone https://github.com/ast21PM/mobilephones_water.git
+cd mobilephones_water
 
 ## 📋 Пример использования
 
