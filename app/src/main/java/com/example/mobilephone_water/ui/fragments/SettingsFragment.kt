@@ -2,25 +2,21 @@ package com.example.mobilephone_water.ui.fragments
 
 import android.app.NotificationManager
 import android.content.Context
-import android.media.MediaPlayer
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.NumberPicker
-import android.widget.Spinner
 import android.widget.Switch
 import android.widget.TextView
 import android.widget.Toast
-import android.widget.Button
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.example.mobilephone_water.R
 import com.example.mobilephone_water.data.notifications.NotificationScheduler
 import com.example.mobilephone_water.data.preferences.AppPreferences
-import com.example.mobilephone_water.R
 
 class SettingsFragment : Fragment() {
 
@@ -31,15 +27,12 @@ class SettingsFragment : Fragment() {
     private lateinit var tvNotificationInterval: TextView
     private lateinit var tvStartTime: TextView
     private lateinit var tvEndTime: TextView
-    private lateinit var spinnerSound: Spinner
     private lateinit var btnChangeInterval: Button
     private lateinit var btnChangeStartTime: Button
     private lateinit var btnChangeEndTime: Button
     private lateinit var btnResetSettings: Button
     private lateinit var btnPrivacyPolicy: Button
-
-    private var mediaPlayer: MediaPlayer? = null
-    private var isInitialLoad = true
+    private lateinit var btnUpdateData: Button
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -65,12 +58,12 @@ class SettingsFragment : Fragment() {
         tvNotificationInterval = view.findViewById(R.id.tv_notification_interval)
         tvStartTime = view.findViewById(R.id.tv_start_time)
         tvEndTime = view.findViewById(R.id.tv_end_time)
-        spinnerSound = view.findViewById(R.id.spinner_sound)
         btnChangeInterval = view.findViewById(R.id.btn_change_interval)
         btnChangeStartTime = view.findViewById(R.id.btn_change_start_time)
         btnChangeEndTime = view.findViewById(R.id.btn_change_end_time)
         btnResetSettings = view.findViewById(R.id.btn_reset_settings)
         btnPrivacyPolicy = view.findViewById(R.id.btn_privacy_policy)
+        btnUpdateData = view.findViewById(R.id.btn_update_data)
     }
 
     private fun loadSettings() {
@@ -89,45 +82,6 @@ class SettingsFragment : Fragment() {
 
         tvStartTime.text = appPreferences.notificationStartTime
         tvEndTime.text = appPreferences.notificationEndTime
-
-        setupSoundSpinner()
-    }
-
-    private fun setupSoundSpinner() {
-        val soundOptions = arrayOf(
-            "🔊 Капля",
-            "🔊 Треск",
-            "🔊 Писк"
-        )
-
-        val soundValues = arrayOf("droplet", "squeak", "bell")
-
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, soundOptions)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerSound.adapter = adapter
-
-        val currentSound = appPreferences.notificationSound
-        val currentIndex = soundValues.indexOf(currentSound).coerceAtLeast(0)
-        spinnerSound.setSelection(currentIndex)
-
-        
-        spinnerSound.onItemSelectedListener = object : android.widget.AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: android.widget.AdapterView<*>?, view: View?, position: Int, id: Long) {
-              
-                if (isInitialLoad) {
-                    isInitialLoad = false
-                    return
-                }
-
-                
-                appPreferences.notificationSound = soundValues[position]
-
-                
-                playTestSound(soundValues[position])
-            }
-
-            override fun onNothingSelected(parent: android.widget.AdapterView<*>?) {}
-        }
     }
 
     private fun setupListeners() {
@@ -135,10 +89,7 @@ class SettingsFragment : Fragment() {
             appPreferences.isNotificationEnabled = isChecked
 
             if (isChecked) {
-                
                 notificationScheduler.scheduleNotifications(appPreferences.notificationInterval / 60)
-
-                
                 createNotificationChannel()
 
                 Toast.makeText(
@@ -147,10 +98,7 @@ class SettingsFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
-               
                 notificationScheduler.cancelNotifications()
-
-               
                 deleteNotificationChannel()
 
                 Toast.makeText(
@@ -180,9 +128,12 @@ class SettingsFragment : Fragment() {
         btnPrivacyPolicy.setOnClickListener {
             showPrivacyPolicy()
         }
+
+        btnUpdateData.setOnClickListener {
+            findNavController().navigate(R.id.action_settingsFragment_to_updateUserDataFragment)
+        }
     }
 
-    
     private fun createNotificationChannel() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             val notificationManager = requireContext().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -198,47 +149,10 @@ class SettingsFragment : Fragment() {
         }
     }
 
-    
     private fun deleteNotificationChannel() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             val notificationManager = requireContext().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.deleteNotificationChannel("water_reminder")
-        }
-    }
-
-    
-    private fun playTestSound(soundType: String) {
-        
-        if (mediaPlayer != null && mediaPlayer!!.isPlaying) {
-            mediaPlayer!!.stop()
-            mediaPlayer!!.release()
-            mediaPlayer = null
-        }
-
-        try {
-            val soundResId = when (soundType) {
-                "droplet" -> R.raw.droplet
-                "squeak" -> R.raw.squeak
-                "bell" -> R.raw.bell
-                else -> R.raw.droplet
-            }
-
-            mediaPlayer = MediaPlayer.create(requireContext(), soundResId)
-            mediaPlayer?.apply {
-                setVolume(0.5f, 0.5f)
-                isLooping = false
-                start()
-
-              
-                Handler(Looper.getMainLooper()).postDelayed({
-                    if (isPlaying) {
-                        stop()
-                        release()
-                    }
-                }, 1000)
-            }
-        } catch (e: Exception) {
-            Toast.makeText(requireContext(), "❌ Ошибка воспроизведения", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -270,9 +184,7 @@ class SettingsFragment : Fragment() {
                 tvNotificationInterval.text = items[selectedIndex]
 
                 if (appPreferences.isNotificationEnabled) {
-                    
                     createNotificationChannel()
-
                     notificationScheduler.cancelNotifications()
                     notificationScheduler.scheduleNotifications(intervalHours)
                 }
@@ -366,14 +278,9 @@ class SettingsFragment : Fragment() {
                 appPreferences.notificationInterval = 120
                 appPreferences.notificationStartTime = "08:00"
                 appPreferences.notificationEndTime = "22:00"
-                appPreferences.notificationSound = "droplet"
-
-               
-                isInitialLoad = true
 
                 loadSettings()
 
-                
                 createNotificationChannel()
 
                 notificationScheduler.cancelNotifications()
@@ -387,16 +294,5 @@ class SettingsFragment : Fragment() {
             }
             .setNegativeButton("✗ Отмена", null)
             .show()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        if (mediaPlayer != null) {
-            if (mediaPlayer!!.isPlaying) {
-                mediaPlayer!!.stop()
-            }
-            mediaPlayer!!.release()
-            mediaPlayer = null
-        }
     }
 }

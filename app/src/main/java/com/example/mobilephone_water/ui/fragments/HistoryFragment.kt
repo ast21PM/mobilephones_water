@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.mobilephone_water.data.entity.WaterRecord
 import com.example.mobilephone_water.ui.adapters.DayGroup
 import com.example.mobilephone_water.ui.adapters.HistoryAdapter
 import com.example.mobilephone_water.ui.viewmodel.WaterViewModel
@@ -37,7 +36,6 @@ class HistoryFragment : Fragment() {
 
         rvHistory.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, true)
 
-
         viewModel.allRecords.observe(viewLifecycleOwner) { records ->
             if (records.isEmpty()) {
                 rvHistory.visibility = View.GONE
@@ -45,7 +43,6 @@ class HistoryFragment : Fragment() {
             } else {
                 rvHistory.visibility = View.VISIBLE
                 tvEmpty.visibility = View.GONE
-
 
                 val groupedByDate = records.groupBy { it.date }
                     .toSortedMap(compareBy { it })

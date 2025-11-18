@@ -34,7 +34,7 @@ class MainFragment : Fragment() {
     private lateinit var btnAdd500ml: Button
     private lateinit var btnAdd1l: Button
     private lateinit var btnMinus100ml: Button
-    private lateinit var btnReset: Button
+    private lateinit var btnCustomAmount: Button
     private lateinit var tvGoal: TextView
     private var dailyGoal = 2200
 
@@ -52,12 +52,9 @@ class MainFragment : Fragment() {
         viewModel = ViewModelProvider(this)[WaterViewModel::class.java]
         appPreferences = AppPreferences(requireContext())
 
-        
         dailyGoal = appPreferences.getDailyWaterGoal()
 
-        
         if (dailyGoal == 2200) {
-            
             val savedWater = appPreferences.getDailyWaterGoal()
             if (savedWater > 0) {
                 dailyGoal = savedWater
@@ -87,7 +84,7 @@ class MainFragment : Fragment() {
         btnAdd500ml = view.findViewById(R.id.btn_add_500ml)
         btnAdd1l = view.findViewById(R.id.btn_add_1l)
         btnMinus100ml = view.findViewById(R.id.btn_minus_100ml)
-        btnReset = view.findViewById(R.id.btn_reset)
+        btnCustomAmount = view.findViewById(R.id.btn_custom_amount)
         tvGoal = view.findViewById(R.id.tv_goal)
 
         tvGoal.setOnClickListener {
@@ -98,7 +95,6 @@ class MainFragment : Fragment() {
     private fun observeData() {
         val currentDate = getCurrentDate()
 
-     
         viewModel.setDailyGoal(dailyGoal)
         waterProgressView.setDailyGoal(dailyGoal)
         updateGoalText()
@@ -141,30 +137,44 @@ class MainFragment : Fragment() {
             showSuccessToast("💧 -100 мл вычтено")
         }
 
-        btnReset.setOnClickListener {
+
+        btnCustomAmount.setOnClickListener {
             animateButtonClick(it)
-            showResetConfirmDialog()
+            showCustomAmountDialog()
         }
     }
 
-    private fun showResetConfirmDialog() {
+
+    private fun showCustomAmountDialog() {
+        val editText = EditText(requireContext()).apply {
+            inputType = android.text.InputType.TYPE_CLASS_NUMBER
+            hint = "Введите количество (мл)"
+            setTextColor(android.graphics.Color.WHITE)
+            setHintTextColor(android.graphics.Color.GRAY)
+        }
+
         AlertDialog.Builder(requireContext())
-            .setTitle("🔄 Сброс данных")
-            .setMessage("Вы уверены? Все записи за сегодня будут удалены.")
-            .setPositiveButton("✓ Да") { dialog, _ ->
-                resetTodayData()
+            .setTitle("💧 Добавить свое количество")
+            .setMessage("Сколько мл воды вы выпили?")
+            .setView(editText)
+            .setPositiveButton("✓ Добавить") { dialog, _ ->
+                val amount = editText.text.toString().toIntOrNull()
+                if (amount != null && amount > 0 && amount <= 5000) {
+                    viewModel.addWaterRecord(amount)
+                    showSuccessToast("💧 +$amount мл добавлено")
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        "❌ Введите корректное значение (1-5000)",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
                 dialog.dismiss()
             }
             .setNegativeButton("✗ Отмена") { dialog, _ ->
                 dialog.dismiss()
             }
             .show()
-    }
-
-    private fun resetTodayData() {
-        val currentDate = getCurrentDate()
-        viewModel.deleteAllRecordsForDate(currentDate)
-        showSuccessToast("🔄 Данные сброшены")
     }
 
     private fun showChangeGoalDialog() {

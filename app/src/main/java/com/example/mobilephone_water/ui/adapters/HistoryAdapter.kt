@@ -19,7 +19,6 @@ data class DayGroup(
 class HistoryAdapter(private val dayGroups: List<DayGroup>) :
     RecyclerView.Adapter<HistoryAdapter.DayViewHolder>() {
 
-
     private fun getCountText(count: Int): String {
         return when {
             count % 10 == 1 && count % 100 != 11 -> "приём"
@@ -37,19 +36,15 @@ class HistoryAdapter(private val dayGroups: List<DayGroup>) :
 
         fun bind(dayGroup: DayGroup) {
             try {
-
                 val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
                 val date = inputFormat.parse(dayGroup.date)
-
 
                 val outputFormat = SimpleDateFormat("dd.MM.yyyy (EEEE)", Locale.Builder().setLanguage("ru").setRegion("RU").build())
 
                 tvDayHeader.text = date?.let { outputFormat.format(it) } ?: dayGroup.date
             } catch (e: Exception) {
-
                 tvDayHeader.text = dayGroup.date
             }
-
 
             val totalAmount = dayGroup.records.sumOf { it.amount }
             val count = dayGroup.records.size
@@ -57,14 +52,12 @@ class HistoryAdapter(private val dayGroups: List<DayGroup>) :
 
             tvDaySummary.text = "Всего: $totalAmount мл · $count $countText"
 
-
             rvRecords.layoutManager = LinearLayoutManager(
                 itemView.context,
                 LinearLayoutManager.VERTICAL,
                 false
             )
             rvRecords.adapter = RecordsAdapter(dayGroup.records)
-
 
             itemView.setOnClickListener {
                 isExpanded = !isExpanded
@@ -82,11 +75,9 @@ class HistoryAdapter(private val dayGroups: List<DayGroup>) :
             private val tvAmount: TextView = itemView.findViewById(R.id.tv_amount)
 
             fun bind(record: WaterRecord) {
-
                 val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
                 val time = Date(record.timestamp)
                 tvTime.text = timeFormat.format(time)
-
 
                 tvAmount.text = "${record.amount} мл"
             }

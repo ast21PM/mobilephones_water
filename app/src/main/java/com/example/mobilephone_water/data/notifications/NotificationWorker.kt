@@ -5,7 +5,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
+import android.media.RingtoneManager
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.work.Worker
@@ -43,14 +43,8 @@ class NotificationWorker(context: Context, params: WorkerParameters) : Worker(co
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
-        
-        val selectedSound = appPreferences.notificationSound
-        val soundUri = when (selectedSound) {
-            "droplet" -> Uri.parse("android.resource://${applicationContext.packageName}/${R.raw.droplet}")
-            "squeak" -> Uri.parse("android.resource://${applicationContext.packageName}/${R.raw.squeak}")
-            "bell" -> Uri.parse("android.resource://${applicationContext.packageName}/${R.raw.bell}")
-            else -> Uri.parse("android.resource://${applicationContext.packageName}/${R.raw.droplet}")
-        }
+
+        val soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
 
         createNotificationChannel(notificationManager, soundUri)
 
@@ -70,15 +64,18 @@ class NotificationWorker(context: Context, params: WorkerParameters) : Worker(co
 
     private fun createNotificationChannel(
         notificationManager: NotificationManager,
-        soundUri: Uri
+        soundUri: android.net.Uri
     ) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val importance = NotificationManager.IMPORTANCE_HIGH
             val channel = NotificationChannel(CHANNEL_ID, "💧 Напоминание о воде", importance).apply {
                 description = "Напоминания о питье воды"
-                setSound(soundUri, android.media.AudioAttributes.Builder()
-                    .setUsage(android.media.AudioAttributes.USAGE_NOTIFICATION)
-                    .build())
+                setSound(
+                    soundUri,
+                    android.media.AudioAttributes.Builder()
+                        .setUsage(android.media.AudioAttributes.USAGE_NOTIFICATION)
+                        .build()
+                )
                 enableVibration(true)
                 lightColor = android.graphics.Color.CYAN
             }

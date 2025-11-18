@@ -9,7 +9,6 @@
     android:padding="16dp"
     tools:context=".MainFragment">
 
-   
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
@@ -23,7 +22,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="75dp" />
 
-   
     <TextView
         android:id="@+id/tv_tip"
         android:layout_width="0dp"
@@ -39,7 +37,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-   
     <com.example.mobilephone_water.ui.views.WaterProgressView
         android:id="@+id/water_progress_view"
         android:layout_width="0dp"
@@ -51,7 +48,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-   
     <TextView
         android:id="@+id/tv_goal"
         android:layout_width="0dp"
@@ -70,7 +66,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="20dp" />
 
-  
     <Button
         android:id="@+id/btn_add_250ml"
         android:layout_width="0dp"
@@ -107,7 +102,6 @@
         android:layout_marginStart="4dp"
         android:elevation="4dp" />
 
-   
     <Button
         android:id="@+id/btn_add_500ml"
         android:layout_width="0dp"
@@ -144,7 +138,6 @@
         android:layout_marginStart="4dp"
         android:elevation="4dp" />
 
- 
     <Button
         android:id="@+id/btn_minus_100ml"
         android:layout_width="0dp"
@@ -158,20 +151,21 @@
         app:cornerRadius="12dp"
         app:layout_constraintTop_toBottomOf="@id/btn_add_500ml"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/btn_reset"
+        app:layout_constraintEnd_toStartOf="@id/btn_custom_amount"
         android:layout_marginTop="6dp"
         android:layout_marginEnd="4dp"
         android:elevation="4dp" />
 
+
     <Button
-        android:id="@+id/btn_reset"
+        android:id="@+id/btn_custom_amount"
         android:layout_width="0dp"
         android:layout_height="80dp"
-        android:text="Сброс"
-        android:textSize="18sp"
+        android:text="➕ Свое количество"
+        android:textSize="14sp"
         android:textStyle="bold"
         android:textColor="@color/text_light"
-        android:backgroundTint="@color/gray_subtle"
+        android:backgroundTint="@color/success_green"
         android:singleLine="true"
         app:cornerRadius="12dp"
         app:layout_constraintTop_toBottomOf="@id/btn_add_1l"
