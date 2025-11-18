@@ -137,20 +137,20 @@ class MainFragment : Fragment() {
             showSuccessToast("💧 -100 мл вычтено")
         }
 
-
         btnCustomAmount.setOnClickListener {
             animateButtonClick(it)
             showCustomAmountDialog()
         }
     }
 
-
     private fun showCustomAmountDialog() {
         val editText = EditText(requireContext()).apply {
             inputType = android.text.InputType.TYPE_CLASS_NUMBER
             hint = "Введите количество (мл)"
-            setTextColor(android.graphics.Color.WHITE)
+            setTextColor(android.graphics.Color.BLACK)
             setHintTextColor(android.graphics.Color.GRAY)
+            setBackgroundColor(android.graphics.Color.WHITE)
+            setPadding(16, 16, 16, 16)
         }
 
         AlertDialog.Builder(requireContext())
@@ -182,6 +182,10 @@ class MainFragment : Fragment() {
             inputType = android.text.InputType.TYPE_CLASS_NUMBER
             hint = "Введите цель (мл)"
             setText(dailyGoal.toString())
+            setTextColor(android.graphics.Color.BLACK)
+            setHintTextColor(android.graphics.Color.GRAY)
+            setBackgroundColor(android.graphics.Color.WHITE)
+            setPadding(16, 16, 16, 16)
         }
 
         AlertDialog.Builder(requireContext())
@@ -214,6 +218,7 @@ class MainFragment : Fragment() {
             }
             .show()
     }
+
 
     private fun updateGoalText() {
         tvGoal.text = "🎯 Цель: $dailyGoal мл в день (нажми для изменения)"
